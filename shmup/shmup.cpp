@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "Keyboard.h"
+#include "Window.h"
 
 #define MAX_LOADSTRING 100
 
@@ -35,21 +36,34 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // TODO: Placez le code ici.
 
-    sf::RenderWindow window(sf::VideoMode({ 800, 450 }), "SFML works!");
+    Window win = Window();
+    win.init();
+    
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+
+    Timer timer;
 
     Keyboard keyboard;
     
     // Boucle de jeu
-    while (window.isOpen())
+    while (win.isOpen())
     {
-        while (const std::optional event = window.pollEvent())
+        /*while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
-        }
+        }*/
 
+        timer.update();
+
+        float deltaTime = static_cast<float>(timer.m_deltaTime);
+
+        if (deltaTime == 0.f) continue;
+        
+        float seconds = deltaTime / 1000.0f;
+        float fps = 1 / seconds;
+        
         keyboard.update();
 
         if (keyboard.keyRelease(KeyCode::down))
@@ -57,14 +71,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             // print "a" pressed
             std::cout << "down is pressed" << std::endl;
         }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
+        
+        // render
+        win.update();
+        // window.clear();
+        // window.draw(shape);
+         
+        //window.draw()
+        //window.display();
     } 
 }
-
-
 
 //
 //  FONCTION: MyRegisterClass()
@@ -118,76 +134,4 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    return TRUE;
-}
-
-//
-//  FONCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  OBJECTIF: Traite les messages pour la fenêtre principale.
-//
-//  WM_COMMAND  - traite le menu de l'application
-//  WM_PAINT    - Dessine la fenêtre principale
-//  WM_DESTROY  - génère un message d'arrêt et retourne
-//
-//
-
-
-/*
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // Analyse les sélections de menu:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Ajoutez ici le code de dessin qui utilise hdc...
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
-}
-*/
-
-// Gestionnaire de messages pour la boîte de dialogue À propos de.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
-
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
 }

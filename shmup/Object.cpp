@@ -19,7 +19,13 @@ void Object::scale(float width, float height)
 }
 */
 
-void Object::draw()
+void init()
 {
-    
+
 }
+
+/*
+void Object::draw(window)
+{
+    window.draw(shape);
+}*/

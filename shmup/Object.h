@@ -1,4 +1,8 @@
 #pragma once
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
+#include <SFML/Graphics/RenderWindow.hpp>
 
 // a class without using libraries like sfml or std
 class Object
@@ -28,5 +32,7 @@ public:
     void scale(float width, float height);
 
     // function draw
-    void draw();
+    void draw(sf::RenderWindow window);
+
+    void init();
 };
