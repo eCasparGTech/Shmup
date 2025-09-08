@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+/.vs
+/.idea
+/shmup/x64
+*.sln
