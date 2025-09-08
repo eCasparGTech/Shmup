@@ -6,6 +6,10 @@
 #include "framework.h"
 #include "shmup.h"
 
+#include <iostream>
+
+#include "Keyboard.h"
+
 #define MAX_LOADSTRING 100
 
 // Variables globales:
@@ -35,6 +39,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
+    Keyboard keyboard;
+    
     // Boucle de jeu
     while (window.isOpen())
     {
@@ -42,6 +48,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
+        }
+
+        keyboard.update();
+
+        if (keyboard.keyRelease(KeyCode::down))
+        {
+            // print "a" pressed
+            std::cout << "down is pressed" << std::endl;
         }
 
         window.clear();
