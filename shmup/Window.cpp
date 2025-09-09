@@ -22,7 +22,7 @@ bool Window::isOpen()
     return m_window.isOpen();
 }
 
-void Window::subscribe(/*const Sprite& sprite*/)
+void Window::subscribe(const Sprite sprite)
 {
-    //m_sprites.push_back(sprite); 
+    m_sprites.push_back(sprite);
 }
