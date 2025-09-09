@@ -11,5 +11,6 @@ public:
     Sprite();
     virtual ~Sprite(){}
 
+    void setPosition(sf::Vector2f position);
     void setGameManager(GameManager* manager);
 };

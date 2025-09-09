@@ -4,7 +4,7 @@
 
 Window::Window()
 {
-    m_window = sf::RenderWindow(sf::VideoMode({ 800, 450 }), "SFML works!");
+    m_window = sf::RenderWindow(sf::VideoMode({ 450, 800 }), "SFML works!");
 }
 
 void Window::clear()

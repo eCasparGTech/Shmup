@@ -1,5 +1,4 @@
 // shmup.cpp : Définit le point d'entrée de l'application.
-//
 #include <SFML/Graphics.hpp>
 #include "framework.h"
 #include "shmup.h"

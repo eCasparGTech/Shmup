@@ -1,9 +1,16 @@
 #include "Object.h"
+#include "GameManager.h"
 
-void Object::move(float x, float y)
+Object::Object()
 {
-    m_x += x;
-    m_y += y;
+    mp_sprite = new Sprite();
+}
+
+
+void Object::move(sf::Vector2f distance)
+{
+    m_position += distance;
+    mp_sprite->setPosition(m_position);
 }
 
 /*
@@ -19,13 +26,7 @@ void Object::scale(float width, float height)
 }
 */
 
-void init()
+void Object::setGameManager(GameManager* manager)
 {
-
+    manager->subscribe(mp_sprite);
 }
-
-/*
-void Object::draw(window)
-{
-    window.draw(shape);
-}*/

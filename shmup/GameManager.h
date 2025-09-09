@@ -3,6 +3,8 @@
 
 class Window;
 class Sprite;
+class Keyboard;
+class Object;
 
 class GameManager
 {
@@ -11,6 +13,7 @@ public:
     virtual ~GameManager(){}
 
     void start();
+    void handleInput(Keyboard* pKeyboard, float deltaTime, Object* pObject);
     void subscribe(Sprite* pSprite);
     void setWindow(Window* pWindow);
     void render();

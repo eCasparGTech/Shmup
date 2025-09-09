@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Keyboard.h"
+#include "Object.h"
 #include "Sprite.h"
 #include "Timer.h"
 #include "Window.h"
@@ -17,9 +18,9 @@ void GameManager::start()
     Timer timer;
 
     Keyboard keyboard;
-
-    Sprite sprite = Sprite();
-    sprite.setGameManager(this);
+    
+    Object object = Object();
+    object.setGameManager(this);
     
     while (mp_window->isOpen())
     {
@@ -31,20 +32,44 @@ void GameManager::start()
         
         float seconds = deltaTime * 0.001f;
         float fps = 1 / seconds;
-        
-        keyboard.update();
 
-        if (keyboard.keyRelease(KeyCode::down))
-        {
-            // print "a" pressed
-            //std::cout << "down is pressed" << std::endl;
-        }
+        handleInput(&keyboard, deltaTime, &object);
         
         // render
         mp_window->clear();
         render();
         mp_window->display();
     }
+}
+
+void GameManager::handleInput(Keyboard* pKeyboard, float deltaTime, Object* pObject)
+{
+    pKeyboard->update();
+    float moveSpeed = 0.2f;
+    float speed = moveSpeed * deltaTime;
+    sf::Vector2f distance = {0.0f, 0.0f};
+
+    if (pKeyboard->keyDown(KeyCode::up))
+    {
+        distance.y -= speed;
+    }
+
+    if (pKeyboard->keyDown(KeyCode::down))
+    {
+        distance.y += speed;
+    }
+
+    if (pKeyboard->keyDown(KeyCode::right))
+    {
+        distance.x += speed;
+    }
+
+    if (pKeyboard->keyDown(KeyCode::left))
+    {
+        distance.x -= speed;
+    }
+    
+    pObject->move(distance);
 }
 
 
