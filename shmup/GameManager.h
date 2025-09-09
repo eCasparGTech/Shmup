@@ -9,20 +9,30 @@ class Sprite;
 
 class GameManager
 {
+    static GameManager *instance;
 public:
     GameManager();
     virtual ~GameManager(){}
 
     void start();
-    void handleInput(Object* pObject);
     void setWindow(Window* pWindow);
     void setKeyboard(Keyboard* pKeyboard);
     void setTimer(Timer* pTimer);
-    void subscribe(Sprite* pSprite);
+    void subscribe(Object* pObject);
     void render();
+    void updateObjects();
+    Keyboard* getKeyboard();
+    Timer* getTimer();
+
+    static GameManager *getInstance()
+    {
+        if (!instance)
+            instance = new GameManager();
+        return instance;
+    }
 private:
-    Window* mp_window;
-    Keyboard* mp_keyboard;
-    Timer* mp_timer;
-    std::vector<Sprite*> mp_spriteList;
+    Window* mp_window = nullptr;
+    Keyboard* mp_keyboard = nullptr;
+    Timer* mp_timer = nullptr;
+    std::vector<Object*> mp_objectList;
 };

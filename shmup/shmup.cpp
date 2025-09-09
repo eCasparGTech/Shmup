@@ -16,8 +16,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Window window = Window();
 
-    GameManager gameManager = GameManager();
-    gameManager.setWindow(&window);
+    GameManager* gameManager = GameManager::getInstance();
+    gameManager->setWindow(&window);
 
-    gameManager.start();
+    gameManager->start();
 }

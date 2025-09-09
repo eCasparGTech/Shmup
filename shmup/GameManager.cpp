@@ -8,6 +8,8 @@
 #include "Timer.h"
 #include "Window.h"
 
+GameManager *GameManager::instance = nullptr;
+
 GameManager::GameManager()
 {
     
@@ -33,43 +35,14 @@ void GameManager::start()
         
         mp_window->setTitle("FPS: " + std::to_string(mp_timer->getFps()));
 
-        handleInput(&object);
+        //handleInput(&object);
+        updateObjects();
         
         // render
         mp_window->clear();
         render();
         mp_window->display();
     }
-}
-
-void GameManager::handleInput(Object* pObject)
-{
-    mp_keyboard->update();
-    float moveSpeed = 0.2f;
-    float speed = moveSpeed * mp_timer->getDelta();
-    sf::Vector2f distance = {0.0f, 0.0f};
-
-    if (mp_keyboard->keyDown(KeyCode::up))
-    {
-        distance.y -= speed;
-    }
-
-    if (mp_keyboard->keyDown(KeyCode::down))
-    {
-        distance.y += speed;
-    }
-
-    if (mp_keyboard->keyDown(KeyCode::right))
-    {
-        distance.x += speed;
-    }
-
-    if (mp_keyboard->keyDown(KeyCode::left))
-    {
-        distance.x -= speed;
-    }
-    
-    pObject->move(distance);
 }
 
 void GameManager::setWindow(Window* pWindow)
@@ -87,15 +60,33 @@ void GameManager::setTimer(Timer* pTimer)
     mp_timer = pTimer;
 }
 
-void GameManager::subscribe(Sprite* pSprite)
+void GameManager::subscribe(Object* pObject)
 {
-    mp_spriteList.push_back(pSprite);
+    mp_objectList.push_back(pObject);
 }
 
 void GameManager::render()
 {
-    for (Sprite* pSprite : mp_spriteList)
+    for (Object* pObject : mp_objectList)
     {
-        mp_window->draw(*pSprite);
+        mp_window->draw(*pObject->mp_sprite);
     }
+}
+
+void GameManager::updateObjects()
+{
+    for (Object* pObject : mp_objectList)
+    {
+        pObject->update();
+    }
+}
+
+Keyboard* GameManager::getKeyboard()
+{
+    return mp_keyboard;
+}
+
+Timer* GameManager::getTimer()
+{
+    return mp_timer;
 }

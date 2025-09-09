@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "Keyboard.h"
 
-Keyboard::byte Keyboard::m_keyboardState[Keyboard::KEYBOARD_SIZE] = {0}; // Définition
+Keyboard::byte Keyboard::m_keyboardState[Keyboard::KEYBOARD_SIZE] = {0};
 
 Keyboard::Keyboard()
 {

@@ -14,8 +14,3 @@ void Sprite::setPosition(sf::Vector2f position)
 {
     m_drawable.setPosition(position);
 }
-
-void Sprite::setGameManager(GameManager* manager)
-{
-    manager->subscribe(this);
-}
