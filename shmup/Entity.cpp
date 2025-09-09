@@ -15,3 +15,9 @@ void Entity::move(sf::Vector2f direction)
     m_position += direction * speed;
     mp_sprite->setPosition(m_position);
 }
+
+
+Entity::Direction Entity::getRandomDirection()
+{
+    return static_cast<Direction>(rand() % 4);
+}

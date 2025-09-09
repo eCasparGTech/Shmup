@@ -34,7 +34,7 @@ public:
 
     void setGameManager(GameManager* manager);
     static float getDistanceBetweenObjects(Object* objectA, Object* objectB);
-    static float getDistance(sf::Vector2f vector2, sf::Vector2f vector2_f);
+    static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
 
 protected:
     GameManager* mp_gameManager;

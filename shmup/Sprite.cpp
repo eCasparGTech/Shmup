@@ -7,7 +7,7 @@
 
 Sprite::Sprite()
 {
-    m_drawable = sf::RectangleShape(sf::Vector2f(100.0f,100.0f));
+    m_drawable = sf::RectangleShape(sf::Vector2f(100.0f, 100.0f));
 }
 
 void Sprite::setPosition(sf::Vector2f position)

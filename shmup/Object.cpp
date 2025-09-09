@@ -41,14 +41,14 @@ void Object::setGameManager(GameManager* manager)
     manager->subscribe(this);
 }
 
-static float getDistanceBetweenObjects(Object* objectA, Object* objectB)
+float Object::getDistanceBetweenObjects(Object* objectA, Object* objectB)
 {
     sf::Vector2f aPosition = objectA->m_position;
     sf::Vector2f bPosition = objectB->m_position;
-    return Object::getDistance(aPosition, bPosition);
+    return Object::getDistance(&aPosition, &bPosition);
 }
 
-static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
+float Object::getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
 {
     return static_cast<float>(
         sqrt(

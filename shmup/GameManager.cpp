@@ -90,3 +90,8 @@ Timer* GameManager::getTimer()
 {
     return mp_timer;
 }
+
+Player* GameManager::getPlayer()
+{
+    return mp_player;
+}

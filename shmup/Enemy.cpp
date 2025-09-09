@@ -16,7 +16,7 @@ void Enemy::update()
     switch (m_state)
     {
     case idle:
-        if (getDistanceBetweenObjects(this, player) <= 100)
+        if (Object::getDistanceBetweenObjects(this, player) <= 100)
         {
             m_state = chasing;
         }
@@ -26,7 +26,7 @@ void Enemy::update()
         }
         break;
     case wandering:
-        if (getDistanceBetweenObjects(this, player) <= 100)
+        if (Object::getDistanceBetweenObjects(this, player) <= 100)
         {
             m_state = chasing;
         }
@@ -62,9 +62,4 @@ void Enemy::wander()
         break;
     default: ;
     }
-}
-
-Enemy::Direction Enemy::getRandomDirection()
-{
-    return static_cast<Direction>(rand() % 4);
 }
