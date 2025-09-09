@@ -1,6 +1,6 @@
 ﻿#include "Sprite.h"
 
-void Sprite :: init(Window window)
+void Sprite::init(Window window)
 {
-    window.subscribe(this);
+    window.subscribe(/*this*/);
 }

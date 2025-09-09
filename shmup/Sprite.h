@@ -3,7 +3,7 @@
 
 class Sprite
 {
-public:
-    void init(Window window);
+public:    
+    void init(typename Window window);
     void update();
 };
