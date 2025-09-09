@@ -4,6 +4,7 @@
 
 #include "Keyboard.h"
 #include "Object.h"
+#include "Player.h"
 #include "Sprite.h"
 #include "Timer.h"
 #include "Window.h"
@@ -23,8 +24,8 @@ void GameManager::start()
     Timer timer = Timer();
     setTimer(&timer);
     
-    Object object = Object();
-    object.setGameManager(this);
+    Player player = Player();
+    player.setGameManager(this);
     
     while (mp_window->isOpen())
     {
@@ -35,7 +36,6 @@ void GameManager::start()
         
         mp_window->setTitle("FPS: " + std::to_string(mp_timer->getFps()));
 
-        //handleInput(&object);
         updateObjects();
         
         // render

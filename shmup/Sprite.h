@@ -12,4 +12,8 @@ public:
     virtual ~Sprite(){}
 
     void setPosition(sf::Vector2f position);
+
+private:
+    // color
+    //float m_r, m_g, m_b;
 };
