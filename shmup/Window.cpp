@@ -1,19 +1,19 @@
 ﻿#include "Window.h"
 
-void Window::init()
+#include "Sprite.h"
+
+Window::Window()
 {
     m_window = sf::RenderWindow(sf::VideoMode({ 800, 450 }), "SFML works!");
 }
 
-void Window::update()
+void Window::clear()
 {
     m_window.clear();
+}
 
-    /*for (auto& s : m_sprites)
-    {
-        m_window.draw(s);
-    }*/
-    
+void Window::display()
+{
     m_window.display();
 }
 
@@ -22,7 +22,7 @@ bool Window::isOpen()
     return m_window.isOpen();
 }
 
-void Window::subscribe(const Sprite sprite)
+void Window::draw(Sprite& pSprite)
 {
-    m_sprites.push_back(sprite);
+    m_window.draw(pSprite.m_drawable);
 }

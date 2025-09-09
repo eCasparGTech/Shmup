@@ -1,11 +1,15 @@
 ﻿#pragma once
-#include "Window.h"
+#include <SFML/Graphics/RectangleShape.hpp>
 
-class Window;
+class GameManager;
 
 class Sprite
 {
 public:
-    void init(typename Window window);
-    void update();
+    sf::RectangleShape m_drawable;
+    
+    Sprite();
+    virtual ~Sprite(){}
+
+    void setGameManager(GameManager* manager);
 };

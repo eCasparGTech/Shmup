@@ -24,6 +24,9 @@ private:
     static byte m_keyboardState[KEYBOARD_SIZE];
     
 public:
+    Keyboard();
+    virtual ~Keyboard(){}
+    
     void update();
 
     bool keyDown(int key);

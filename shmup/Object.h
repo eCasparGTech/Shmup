@@ -8,6 +8,9 @@
 class Object
 {
 public:
+    Object();
+    virtual ~Object(){}
+    
     // position
     float m_x;
     float m_y;

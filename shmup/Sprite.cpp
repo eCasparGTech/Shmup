@@ -1,6 +1,16 @@
 ﻿#include "Sprite.h"
 
-void Sprite::init(Window window)
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "GameManager.h"
+
+Sprite::Sprite()
 {
-    window.subscribe(*this);
+    m_drawable = sf::RectangleShape(sf::Vector2f(100,100));
+}
+
+void Sprite::setGameManager(GameManager* manager)
+{
+    manager->subscribe(this);
 }

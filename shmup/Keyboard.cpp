@@ -3,6 +3,11 @@
 
 Keyboard::byte Keyboard::m_keyboardState[Keyboard::KEYBOARD_SIZE] = {0}; // Définition
 
+Keyboard::Keyboard()
+{
+    
+}
+
 void Keyboard::update()
 {
     for (int i = 0; i < KEYBOARD_SIZE; i++)

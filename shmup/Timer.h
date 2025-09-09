@@ -4,11 +4,12 @@ class Timer
 {
 public:
     Timer();
+    virtual ~Timer(){}
     
-    DWORD m_deltaTime;
+    unsigned int m_deltaTime;
     
     void update();
 
 private:
-    DWORD m_sysTime;
+    unsigned int m_sysTime;
 };
