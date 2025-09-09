@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
 
 class Sprite;
 
@@ -8,11 +8,12 @@ class Window
 public:
     Window();
     virtual ~Window(){}
-    
-    sf::RenderWindow m_window;
 
+    void pollEvents();
     void clear();
     void display();
-    bool isOpen();
+    bool isOpen() const;
     void draw(Sprite& pSprite);
+
+    sf::RenderWindow m_window;
 };

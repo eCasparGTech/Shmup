@@ -24,18 +24,14 @@ void GameManager::start()
     
     while (mp_window->isOpen())
     {
+        mp_window->pollEvents();
+
         timer.update();
-
         float deltaTime = static_cast<float>(timer.m_deltaTime);
-
         if (deltaTime == 0.f) continue;
-        
-        float seconds = deltaTime * 0.001f;
-        float fps = 1 / seconds;
 
-        handleInput(&keyboard, deltaTime, &object);
-        
-        // render
+        keyboard.update();
+
         mp_window->clear();
         render();
         mp_window->display();
