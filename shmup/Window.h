@@ -3,14 +3,16 @@
 #include <vector>
 #include "Sprite.h"
 
+class Sprite;
+
 class Window
 {
-    std::vector<Sprite> m_sprites;
 public:
     sf::RenderWindow m_window;
+    std::vector<Sprite> m_sprites;
 
     void init();
     void update();
     bool isOpen();
-    void subscribe(const Sprite& sprite);
+    void subscribe(const Sprite sprite);
 };

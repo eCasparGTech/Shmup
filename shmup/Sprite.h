@@ -1,9 +1,11 @@
 ﻿#pragma once
 #include "Window.h"
 
+class Window;
+
 class Sprite
 {
 public:
-    void init(Window window);
+    void init(typename Window window);
     void update();
 };
