@@ -15,9 +15,11 @@ GameManager::GameManager()
 
 void GameManager::start()
 {
-    Timer timer;
-
-    Keyboard keyboard;
+    Keyboard keyboard = Keyboard();
+    setKeyboard(&keyboard);
+    
+    Timer timer = Timer();
+    setTimer(&timer);
     
     Object object = Object();
     object.setGameManager(this);
@@ -25,42 +27,44 @@ void GameManager::start()
     while (mp_window->isOpen())
     {
         mp_window->pollEvents();
+        
+        mp_timer->update();
+        if (mp_timer->getDelta() == 0.0f) continue;
+        
+        mp_window->setTitle("FPS: " + std::to_string(mp_timer->getFps()));
 
-        timer.update();
-        float deltaTime = static_cast<float>(timer.m_deltaTime);
-        if (deltaTime == 0.f) continue;
-
-        keyboard.update();
-
+        handleInput(&object);
+        
+        // render
         mp_window->clear();
         render();
         mp_window->display();
     }
 }
 
-void GameManager::handleInput(Keyboard* pKeyboard, float deltaTime, Object* pObject)
+void GameManager::handleInput(Object* pObject)
 {
-    pKeyboard->update();
+    mp_keyboard->update();
     float moveSpeed = 0.2f;
-    float speed = moveSpeed * deltaTime;
+    float speed = moveSpeed * mp_timer->getDelta();
     sf::Vector2f distance = {0.0f, 0.0f};
 
-    if (pKeyboard->keyDown(KeyCode::up))
+    if (mp_keyboard->keyDown(KeyCode::up))
     {
         distance.y -= speed;
     }
 
-    if (pKeyboard->keyDown(KeyCode::down))
+    if (mp_keyboard->keyDown(KeyCode::down))
     {
         distance.y += speed;
     }
 
-    if (pKeyboard->keyDown(KeyCode::right))
+    if (mp_keyboard->keyDown(KeyCode::right))
     {
         distance.x += speed;
     }
 
-    if (pKeyboard->keyDown(KeyCode::left))
+    if (mp_keyboard->keyDown(KeyCode::left))
     {
         distance.x -= speed;
     }
@@ -68,15 +72,24 @@ void GameManager::handleInput(Keyboard* pKeyboard, float deltaTime, Object* pObj
     pObject->move(distance);
 }
 
+void GameManager::setWindow(Window* pWindow)
+{
+    mp_window = pWindow;
+}
+
+void GameManager::setKeyboard(Keyboard* pKeyboard)
+{
+    mp_keyboard = pKeyboard;
+}
+
+void GameManager::setTimer(Timer* pTimer)
+{
+    mp_timer = pTimer;
+}
 
 void GameManager::subscribe(Sprite* pSprite)
 {
     mp_spriteList.push_back(pSprite);
-}
-
-void GameManager::setWindow(Window* pWindow)
-{
-    mp_window = pWindow;
 }
 
 void GameManager::render()

@@ -14,6 +14,7 @@ public:
     void display();
     bool isOpen() const;
     void draw(Sprite& pSprite);
+    void setTitle(std::string title);
 
     sf::RenderWindow m_window;
 };

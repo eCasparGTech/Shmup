@@ -6,10 +6,10 @@ public:
     Timer();
     virtual ~Timer(){}
     
-    unsigned int m_deltaTime;
-    
     void update();
-
+    float getDelta();
+    float getFps();
 private:
     unsigned int m_sysTime;
+    unsigned int m_deltaTime;
 };

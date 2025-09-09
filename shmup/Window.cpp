@@ -1,8 +1,6 @@
 ﻿#include "Window.h"
 #include "Sprite.h"
-
 #include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
 
 Window::Window()
 {
@@ -38,4 +36,9 @@ bool Window::isOpen() const
 void Window::draw(Sprite& pSprite)
 {
     m_window.draw(pSprite.m_drawable);
+}
+
+void Window::setTitle(std::string title)
+{
+    m_window.setTitle(title);
 }

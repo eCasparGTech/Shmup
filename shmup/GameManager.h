@@ -2,9 +2,10 @@
 #include <vector>
 
 class Window;
-class Sprite;
 class Keyboard;
+class Timer;
 class Object;
+class Sprite;
 
 class GameManager
 {
@@ -13,11 +14,15 @@ public:
     virtual ~GameManager(){}
 
     void start();
-    void handleInput(Keyboard* pKeyboard, float deltaTime, Object* pObject);
-    void subscribe(Sprite* pSprite);
+    void handleInput(Object* pObject);
     void setWindow(Window* pWindow);
+    void setKeyboard(Keyboard* pKeyboard);
+    void setTimer(Timer* pTimer);
+    void subscribe(Sprite* pSprite);
     void render();
 private:
     Window* mp_window;
+    Keyboard* mp_keyboard;
+    Timer* mp_timer;
     std::vector<Sprite*> mp_spriteList;
 };
