@@ -1,4 +1,7 @@
 #include "Object.h"
+
+#include <SFML/Window/WindowEnums.hpp>
+
 #include "GameManager.h"
 #include "Keyboard.h"
 #include "Timer.h"
@@ -36,4 +39,21 @@ void Object::scale(float width, float height)
 void Object::setGameManager(GameManager* manager)
 {
     manager->subscribe(this);
+}
+
+static float getDistanceBetweenObjects(Object* objectA, Object* objectB)
+{
+    sf::Vector2f aPosition = objectA->m_position;
+    sf::Vector2f bPosition = objectB->m_position;
+    return Object::getDistance(aPosition, bPosition);
+}
+
+static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
+{
+    return static_cast<float>(
+        sqrt(
+            (bPosition->x - aPosition->x) * (bPosition->x - aPosition->x)
+            + (bPosition->y - aPosition->y) * (bPosition->y - aPosition->y)
+        )
+    );
 }

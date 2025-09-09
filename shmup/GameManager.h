@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <vector>
 
+#include "Player.h"
+
 class Window;
 class Keyboard;
 class Timer;
@@ -23,6 +25,7 @@ public:
     void updateObjects();
     Keyboard* getKeyboard();
     Timer* getTimer();
+    Player* getPlayer();
 
     static GameManager *getInstance()
     {
@@ -34,5 +37,6 @@ private:
     Window* mp_window = nullptr;
     Keyboard* mp_keyboard = nullptr;
     Timer* mp_timer = nullptr;
+    Player* mp_player = nullptr;
     std::vector<Object*> mp_objectList;
 };
