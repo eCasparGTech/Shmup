@@ -5,11 +5,11 @@ class GameManager;
 
 class Sprite
 {
-public:
-    sf::RectangleShape m_drawable;
-    
+public:    
     Sprite();
     virtual ~Sprite(){}
+    
+    sf::RectangleShape m_drawable;
 
     void setPosition(sf::Vector2f position);
 

@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Alive.h" />
+    <ClInclude Include="Alive.tpp" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="framework.h" />
@@ -148,7 +149,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="shmup.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
@@ -165,7 +165,6 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="shmup.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

@@ -32,10 +32,9 @@ public:
     // function scale
     //void scale(float width, float height);
 
-    void setGameManager(GameManager* manager);
     static float getDistance(Object* objectA, Object* objectB);
     static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
 
 protected:
-    GameManager* mp_gameManager;
+    GameManager* mp_gameManager = nullptr;
 };

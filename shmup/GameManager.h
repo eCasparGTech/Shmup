@@ -26,6 +26,15 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
+    
+    template <class T>
+    T* createObject()
+    {
+        static_assert(std::is_base_of<Object, T>::value, "T must derive from Object");
+        T* object = new T();
+        mp_pendingObjectList.push_back(object);
+        return object;
+    }
 
     static GameManager *getInstance()
     {
@@ -39,4 +48,5 @@ private:
     Timer* mp_timer = nullptr;
     Player* mp_player = nullptr;
     std::vector<Object*> mp_objectList;
+    std::vector<Object*> mp_pendingObjectList;
 };

@@ -3,8 +3,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "GameManager.h"
-
 Sprite::Sprite()
 {
     m_drawable = sf::RectangleShape(sf::Vector2f(100.0f, 100.0f));

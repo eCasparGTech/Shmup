@@ -24,11 +24,13 @@ void GameManager::start()
     Timer timer = Timer();
     setTimer(&timer);
     
-    Player player = Player();
-    player.setGameManager(this);
+    //Player player = Player();
+    //Object object = Object();
+    createObject<Player>();
     
     while (mp_window->isOpen())
     {
+        
         mp_window->pollEvents();
         
         mp_timer->update();
@@ -42,6 +44,14 @@ void GameManager::start()
         mp_window->clear();
         render();
         mp_window->display();
+        
+        //mp_objectList.clear();
+        
+        for (Object* pObject : mp_pendingObjectList)
+        {
+            mp_objectList.push_back(std::move(pObject));
+        }
+        mp_pendingObjectList.clear();
     }
 }
 
@@ -62,7 +72,7 @@ void GameManager::setTimer(Timer* pTimer)
 
 void GameManager::subscribe(Object* pObject)
 {
-    mp_objectList.push_back(pObject);
+    mp_pendingObjectList.push_back(pObject);
 }
 
 void GameManager::render()

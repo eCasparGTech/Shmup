@@ -1,8 +1,13 @@
 ﻿#include "Player.h"
-
 #include "GameManager.h"
 #include "Keyboard.h"
-#include "Timer.h"
+#include "Missile.h"
+#include "Projectile.h"
+
+Player::Player()
+{
+    
+}
 
 void Player::handleInput()
 {
@@ -31,9 +36,9 @@ void Player::handleInput()
         distance.x -= m_moveSpeed;
     }
 
-    if (keyboard->keyDown(KeyCode::space))
+    if (keyboard->keyPress(KeyCode::space))
     {
-        //
+        Attack<Missile>();
     }
 
     /*if (keyboard->keyPress(KeyCode::space))
@@ -48,11 +53,6 @@ void Player::handleInput()
     }*/
     
     move(&distance);
-}
-
-Player::Player()
-{
-    
 }
 
 void Player::update()
