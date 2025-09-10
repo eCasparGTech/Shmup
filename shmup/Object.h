@@ -33,7 +33,7 @@ public:
     //void scale(float width, float height);
 
     void setGameManager(GameManager* manager);
-    static float getDistanceBetweenObjects(Object* objectA, Object* objectB);
+    static float getDistance(Object* objectA, Object* objectB);
     static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
 
 protected:
