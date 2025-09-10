@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Entity.h"
-#include "Projectile.h"
 
 class GameManager;
 
@@ -10,8 +9,14 @@ public:
     Alive();
     virtual ~Alive() {}
 
-    template <class T>
-    void Attack();
-};
+    enum AttackType
+    {
+        Projectile = 0
+    };
 
-#include "Alive.tpp"
+    void Attack(AttackType attackType);
+    
+private:
+    unsigned int mp_attackTime;
+    unsigned int mp_attackCooldown;
+};

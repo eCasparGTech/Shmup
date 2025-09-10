@@ -7,5 +7,14 @@ public:
     Projectile();
     virtual ~Projectile() {}
 
-    //void update() override;
+    enum ProjectileType
+    {
+        
+    };
+
+    void update() override;
+
+private:
+    unsigned int mp_birthtime;
+    float mp_lifetime;
 };

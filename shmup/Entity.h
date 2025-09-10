@@ -14,6 +14,7 @@ public:
     void move(sf::Vector2f* distance);
     void setDestination(sf::Vector2f* destination);
     void goToDestination();
+    sf::Vector2f* getDirection();
 
     enum Direction
     {

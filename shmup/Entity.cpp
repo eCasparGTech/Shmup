@@ -9,19 +9,20 @@
 
 Entity::Entity()
 {
-    m_moveSpeed = 0.2f;
+    m_moveSpeed = 0.4f;
     m_timer = mp_gameManager->getTimer();
-    
+
     m_hasDestination = false;
     m_enabled = true;
     m_visible = true;
+    m_direction = up;
 }
 
 void Entity::move(sf::Vector2f* direction)
 {
-    float speed = m_moveSpeed * m_timer->getDelta();
+    float speed = m_moveSpeed * static_cast<float>(m_timer->getDelta());
     m_position += *direction * speed;
-    mp_sprite->setPosition(m_position);
+    setPosition(m_position);
 }
 
 void Entity::setDestination(sf::Vector2f* destination)
@@ -48,4 +49,25 @@ void Entity::goToDestination()
         };
         move(&direction);
     }
+}
+
+sf::Vector2f* Entity::getDirection()
+{
+    sf::Vector2f* direction = new sf::Vector2f();
+    switch (m_direction)
+    {
+    case up:
+        *direction = {0.0f, -1.0f};
+        break;
+    case down:
+         *direction = {0.0f, 1.0f};
+        break;
+    case left:
+         *direction = {-1.0f, 0.0f};
+        break;
+    case right:
+         *direction = {1.0f, 0.0f};
+        break;
+    }
+    return direction;
 }

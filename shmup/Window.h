@@ -15,6 +15,7 @@ public:
     bool isOpen() const;
     void draw(Sprite& pSprite);
     void setTitle(std::string title);
+    sf::Vector2u getDimensions();
 
     sf::RenderWindow m_window;
 };

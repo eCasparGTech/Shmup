@@ -3,10 +3,12 @@
 #include "Keyboard.h"
 #include "Missile.h"
 #include "Projectile.h"
+#include "Window.h"
 
 Player::Player()
 {
-    
+    sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
+    m_position = { dimensions.x * 0.5f, dimensions.y * 0.5f };
 }
 
 void Player::handleInput()
@@ -36,9 +38,9 @@ void Player::handleInput()
         distance.x -= m_moveSpeed;
     }
 
-    if (keyboard->keyPress(KeyCode::space))
+    if (keyboard->keyDown(KeyCode::space))
     {
-        Attack<Missile>();
+        Attack(Projectile);
     }
 
     /*if (keyboard->keyPress(KeyCode::space))
@@ -51,7 +53,7 @@ void Player::handleInput()
     {
         goToDestination();
     }*/
-    
+
     move(&distance);
 }
 

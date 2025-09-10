@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "framework.h"
 
 class GameManager;
 
@@ -12,6 +13,7 @@ public:
     sf::RectangleShape m_drawable;
 
     void setPosition(sf::Vector2f position);
+    void setShape(sf::Vector2f shape);
 
 private:
     // color

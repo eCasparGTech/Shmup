@@ -10,5 +10,11 @@ Sprite::Sprite()
 
 void Sprite::setPosition(sf::Vector2f position)
 {
-    m_drawable.setPosition(position);
+    sf::Vector2f centeredPosition = { position.x - m_drawable.getSize().x * 0.5f, position.y - m_drawable.getSize().y * 0.5f };
+    m_drawable.setPosition(centeredPosition);
+}
+
+void Sprite::setShape(sf::Vector2f shape)
+{
+    m_drawable.setSize(shape);
 }

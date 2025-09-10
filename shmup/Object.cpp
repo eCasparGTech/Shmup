@@ -6,6 +6,7 @@ Object::Object()
 {
     mp_sprite = new Sprite();
     mp_gameManager = GameManager::getInstance();
+    m_position = sf::Vector2f(0.0f, 0.0f);
 }
 
 void Object::update()

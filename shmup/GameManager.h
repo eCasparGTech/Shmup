@@ -26,7 +26,9 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
-    
+    void destroyObject(Object* object);
+    Window* getWindow();
+
     template <class T>
     T* createObject()
     {
@@ -49,4 +51,5 @@ private:
     Player* mp_player = nullptr;
     std::vector<Object*> mp_objectList;
     std::vector<Object*> mp_pendingObjectList;
+    std::vector<Object*> mp_objectToDestroy;
 };

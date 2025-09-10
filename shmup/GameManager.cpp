@@ -24,34 +24,40 @@ void GameManager::start()
     Timer timer = Timer();
     setTimer(&timer);
     
-    //Player player = Player();
-    //Object object = Object();
     createObject<Player>();
     
     while (mp_window->isOpen())
     {
-        
-        mp_window->pollEvents();
-        
+        // creating objects
+        for (Object* pObject : mp_pendingObjectList)
+        {
+            mp_objectList.push_back(std::move(pObject));
+        }
+        mp_pendingObjectList.clear();
+
+        // destroying objects
+        for (Object* pObject : mp_objectToDestroy)
+        {
+            mp_objectList.erase(std::remove(mp_objectList.begin(), mp_objectList.end(), pObject), mp_objectList.end());
+            delete pObject;
+        }
+        mp_objectToDestroy.clear();
+
+        // timer update
         mp_timer->update();
-        if (mp_timer->getDelta() == 0.0f) continue;
-        
+        if (mp_timer->getDelta() == 0) continue;
+
+        // window events
+        mp_window->pollEvents();
         mp_window->setTitle("FPS: " + std::to_string(mp_timer->getFps()));
 
+        // update objects
         updateObjects();
         
         // render
         mp_window->clear();
         render();
         mp_window->display();
-        
-        //mp_objectList.clear();
-        
-        for (Object* pObject : mp_pendingObjectList)
-        {
-            mp_objectList.push_back(std::move(pObject));
-        }
-        mp_pendingObjectList.clear();
     }
 }
 
@@ -73,6 +79,17 @@ void GameManager::setTimer(Timer* pTimer)
 void GameManager::subscribe(Object* pObject)
 {
     mp_pendingObjectList.push_back(pObject);
+}
+
+void GameManager::destroyObject(Object* object)
+{
+    if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end()) return;
+    mp_objectToDestroy.push_back(object);
+}
+
+Window* GameManager::getWindow()
+{
+    return mp_window;
 }
 
 void GameManager::render()

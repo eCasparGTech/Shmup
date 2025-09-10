@@ -15,3 +15,5 @@
 #include <tchar.h>
 #include "timeapi.h"
 //#include <string>
+#include <iostream>
+#include <ostream>

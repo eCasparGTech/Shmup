@@ -42,3 +42,8 @@ void Window::setTitle(std::string title)
 {
     m_window.setTitle(title);
 }
+
+sf::Vector2u Window::getDimensions()
+{
+    return m_window.getSize();
+}

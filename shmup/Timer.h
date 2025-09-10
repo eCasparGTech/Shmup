@@ -7,8 +7,10 @@ public:
     virtual ~Timer(){}
     
     void update();
-    float getDelta();
+    unsigned int getDelta();
     float getFps();
+    static unsigned int getTime();
+
 private:
     unsigned int m_sysTime;
     unsigned int m_deltaTime;
