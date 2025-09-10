@@ -9,6 +9,24 @@ Object::Object()
     m_position = sf::Vector2f(0.0f, 0.0f);
 }
 
+void Object::setWidth(float width)
+{
+    mp_width = width;
+    mp_sprite->setWidth(width);
+}
+
+void Object::setHeight(float height)
+{
+    mp_height = height;
+    mp_sprite->setHeight(height);
+}
+
+void Object::setSize(sf::Vector2f size)
+{
+    setWidth(size.x);
+    setHeight(size.y);
+}
+
 void Object::update()
 {
     // collider

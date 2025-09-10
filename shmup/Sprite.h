@@ -6,15 +6,19 @@ class GameManager;
 
 class Sprite
 {
-public:    
+public:
     Sprite();
-    virtual ~Sprite(){}
-    
+    virtual ~Sprite() {}
+
+    void setWidth(float width);
+    void setHeight(float height);
+    void setSize(sf::Vector2f shape);
+
     sf::RectangleShape m_drawable;
 
     void setPosition(sf::Vector2f position);
-    void setShape(sf::Vector2f shape);
 
+    void setColor(sf::Color color);
 private:
     // color
     //float m_r, m_g, m_b;

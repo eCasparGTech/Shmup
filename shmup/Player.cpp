@@ -1,7 +1,6 @@
 ﻿#include "Player.h"
 #include "GameManager.h"
 #include "Keyboard.h"
-#include "Missile.h"
 #include "Projectile.h"
 #include "Window.h"
 
@@ -9,6 +8,8 @@ Player::Player()
 {
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
+    setSize({80.0f, 80.0f});
+    mp_sprite->setColor({0, 0, 200, 255});
 }
 
 void Player::handleInput()

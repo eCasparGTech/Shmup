@@ -17,8 +17,12 @@ public:
     //float m_rotation;
 
     // scale
-    //float m_width;
-    //float m_height;
+    float getWidth() { return mp_width; }
+    float getHeight() { return mp_height; }
+    void setWidth(float width);
+    void setHeight(float height);
+
+    void setSize(sf::Vector2f size);
 
     virtual void update();
 
@@ -35,4 +39,8 @@ public:
 
 protected:
     GameManager* mp_gameManager = nullptr;
+
+private:
+    float mp_width;
+    float mp_height;
 };
