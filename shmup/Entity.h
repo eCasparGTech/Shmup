@@ -12,8 +12,9 @@ public:
     float m_moveSpeed;
     Timer* m_timer;
 
-    void move(sf::Vector2f distance);
-    void goTo(sf::Vector2f position);
+    void move(sf::Vector2f* distance);
+    void setDestination(sf::Vector2f* destination);
+    void goToDestination();
 
     enum Direction
     {
@@ -29,4 +30,7 @@ public:
 protected:
     bool enabled = true;
     bool visible = true;
+    
+    sf::Vector2f m_destination;
+    bool m_hasDestination;
 };

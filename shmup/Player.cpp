@@ -31,8 +31,19 @@ void Player::handleInput()
     {
         distance.x -= moveSpeed;
     }
+
+    /*if (keyboard->keyPress(KeyCode::space))
+    {
+        sf::Vector2f destination = {200.0f, 200.0f};
+        setDestination(&destination);
+    }*/
+
+    /*if (m_hasDestination)
+    {
+        goToDestination();
+    }*/
     
-    move(distance);
+    move(&distance);
 }
 
 Player::Player()

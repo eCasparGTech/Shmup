@@ -20,7 +20,4 @@ protected:
     };
 
     State m_state;
-
-    
-    sf::Vector2f m_destination;
 };

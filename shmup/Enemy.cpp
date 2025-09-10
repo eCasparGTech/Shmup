@@ -60,6 +60,5 @@ void Enemy::wander()
     case right:
         
         break;
-    default: ;
     }
 }
