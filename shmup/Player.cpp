@@ -8,28 +8,32 @@ void Player::handleInput()
 {
     Keyboard* keyboard = mp_gameManager->getKeyboard();
     keyboard->update();
-    
-    float moveSpeed = 0.2f;
+
     sf::Vector2f distance = {0.0f, 0.0f};
 
     if (keyboard->keyDown(KeyCode::up))
     {
-        distance.y -= moveSpeed;
+        distance.y -= m_moveSpeed;
     }
 
     if (keyboard->keyDown(KeyCode::down))
     {
-        distance.y += moveSpeed;
+        distance.y += m_moveSpeed;
     }
 
     if (keyboard->keyDown(KeyCode::right))
     {
-        distance.x += moveSpeed;
+        distance.x += m_moveSpeed;
     }
 
     if (keyboard->keyDown(KeyCode::left))
     {
-        distance.x -= moveSpeed;
+        distance.x -= m_moveSpeed;
+    }
+
+    if (keyboard->keyDown(KeyCode::space))
+    {
+        //
     }
 
     /*if (keyboard->keyPress(KeyCode::space))

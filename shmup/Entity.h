@@ -6,7 +6,6 @@ class Entity : public Object
 {
 public:
     Entity();
-
     virtual ~Entity() {}
 
     float m_moveSpeed;
@@ -28,8 +27,8 @@ public:
     Direction m_direction;
 
 protected:
-    bool enabled = true;
-    bool visible = true;
+    bool m_enabled;
+    bool m_visible;
     
     sf::Vector2f m_destination;
     bool m_hasDestination;

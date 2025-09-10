@@ -11,7 +11,10 @@ Entity::Entity()
 {
     m_moveSpeed = 0.2f;
     m_timer = mp_gameManager->getTimer();
+    
     m_hasDestination = false;
+    m_enabled = true;
+    m_visible = true;
 }
 
 void Entity::move(sf::Vector2f* direction)
