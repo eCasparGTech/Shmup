@@ -8,11 +8,11 @@ class Object
 {
 public:
     Object();
-    virtual ~Object(){ delete mp_sprite; }
+    virtual ~Object() { delete mp_sprite; }
 
     sf::Vector2f m_position;
     Sprite* mp_sprite;
-    
+
     // rotation
     //float m_rotation;
 

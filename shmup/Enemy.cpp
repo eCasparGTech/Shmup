@@ -31,13 +31,13 @@ void Enemy::update()
             m_state = chasing;
         }
 
-        
+
         break;
     case chasing:
-        
+
         break;
     case attacking:
-        
+
         break;
     default:
         break;
@@ -49,16 +49,16 @@ void Enemy::wander()
     switch (getRandomDirection())
     {
     case up:
-        
+
         break;
     case down:
-        
+
         break;
     case left:
-        
+
         break;
     case right:
-        
+
         break;
     }
 }

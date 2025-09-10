@@ -5,8 +5,6 @@
 #include "Projectile.h"
 #include "Window.h"
 
-
-
 Player::Player()
 {
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
@@ -46,7 +44,7 @@ void Player::handleInput()
     }
 
     move(distance);
-    
+
     /*if (keyboard->keyPress(KeyCode::space))
     {
         sf::Vector2f destination = {200.0f, 200.0f};
@@ -57,7 +55,6 @@ void Player::handleInput()
     {
         goToDestination();
     }*/
-
 }
 
 void Player::update()

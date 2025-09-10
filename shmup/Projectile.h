@@ -7,10 +7,7 @@ public:
     Projectile();
     virtual ~Projectile() {}
 
-    enum ProjectileType
-    {
-        
-    };
+    enum ProjectileType {};
 
     void update() override;
 

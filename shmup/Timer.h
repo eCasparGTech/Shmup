@@ -4,8 +4,8 @@ class Timer
 {
 public:
     Timer();
-    virtual ~Timer(){}
-    
+    virtual ~Timer() {}
+
     void update();
     float getDelta();
     float getFps();

@@ -15,7 +15,7 @@ public:
     };
 
     void Attack(AttackType attackType);
-    
+
 private:
     float mp_attackTime;
     float mp_attackCooldown;

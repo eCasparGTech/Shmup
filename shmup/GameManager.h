@@ -11,10 +11,11 @@ class Sprite;
 
 class GameManager
 {
-    static GameManager *instance;
+    static GameManager* instance;
+
 public:
     GameManager();
-    virtual ~GameManager(){}
+    virtual ~GameManager() {}
 
     void start();
     void setWindow(Window* pWindow);
@@ -38,12 +39,13 @@ public:
         return object;
     }
 
-    static GameManager *getInstance()
+    static GameManager* getInstance()
     {
         if (!instance)
             instance = new GameManager();
         return instance;
     }
+
 private:
     Window* mp_window = nullptr;
     Keyboard* mp_keyboard = nullptr;

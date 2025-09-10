@@ -12,7 +12,7 @@ Projectile::Projectile()
 void Projectile::update()
 {
     Entity::update();
-    
+
     move(getDirection());
 
     float age = Timer::getTime() - mp_birthtime;
