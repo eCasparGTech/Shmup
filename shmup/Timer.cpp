@@ -9,23 +9,23 @@ Timer::Timer()
 
 void Timer::update()
 {
-    unsigned int time = getTime();
+    float time = getTime();
     m_deltaTime = time - m_sysTime;
     m_sysTime = time;
 }
 
-unsigned int Timer::getDelta()
+float Timer::getDelta()
 {
     return m_deltaTime;
 }
 
 float Timer::getFps()
 {
-    float seconds = static_cast<float>(getDelta()) * 0.001f;
+    float seconds = getDelta() * 0.001f;
     return (static_cast<int>(seconds) != 0) ? 1 / seconds : 0.0f;
 }
 
-unsigned int Timer::getTime()
+float Timer::getTime()
 {
-    return static_cast<unsigned int>(timeGetTime());
+    return static_cast<float>(timeGetTime()) * 0.001f;
 }

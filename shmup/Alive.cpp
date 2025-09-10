@@ -5,8 +5,8 @@
 
 Alive::Alive()
 {
-    mp_attackTime = 0;
-    mp_attackCooldown = 100;
+    mp_attackTime = 0.0f;
+    mp_attackCooldown = 0.1f;
 }
 
 void Alive::Attack(AttackType attackType)

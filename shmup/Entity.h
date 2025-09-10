@@ -1,21 +1,11 @@
 ﻿#pragma once
 #include "Object.h"
 #include "Timer.h"
+#include <SFML/System/Vector2.hpp>
 
 class Entity : public Object
 {
 public:
-    Entity();
-    virtual ~Entity() {}
-
-    float m_moveSpeed;
-    Timer* m_timer;
-
-    void move(sf::Vector2f* distance);
-    void setDestination(sf::Vector2f* destination);
-    void goToDestination();
-    sf::Vector2f* getDirection();
-
     enum Direction
     {
         up = 0,
@@ -24,13 +14,27 @@ public:
         right = 3
     };
 
+    Entity();
+    virtual ~Entity() {}
+
+    void move(const sf::Vector2f& inputDirection);
+    void move(Direction direction);
+
+    void setDestination(const sf::Vector2f& destination);
+    void goToDestination();
+
+    sf::Vector2f getDirection() const;
+    static sf::Vector2f toVector(Direction direction);
     static Direction getRandomDirection();
+
+    float m_moveSpeed;
+    Timer* m_timer;
     Direction m_direction;
 
 protected:
     bool m_enabled;
     bool m_visible;
-    
+
     sf::Vector2f m_destination;
     bool m_hasDestination;
 };

@@ -42,10 +42,8 @@ float Object::getDistance(Object* objectA, Object* objectB)
 
 float Object::getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
 {
-    return static_cast<float>(
-        sqrt(
-            (bPosition->x - aPosition->x) * (bPosition->x - aPosition->x)
-            + (bPosition->y - aPosition->y) * (bPosition->y - aPosition->y)
-        )
+    return sqrt(
+        (bPosition->x - aPosition->x) * (bPosition->x - aPosition->x)
+        + (bPosition->y - aPosition->y) * (bPosition->y - aPosition->y)
     );
 }

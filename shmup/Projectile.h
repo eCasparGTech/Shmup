@@ -15,6 +15,6 @@ public:
     void update() override;
 
 private:
-    unsigned int mp_birthtime;
+    float mp_birthtime;
     float mp_lifetime;
 };

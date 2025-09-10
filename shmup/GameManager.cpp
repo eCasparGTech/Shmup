@@ -1,31 +1,24 @@
 ﻿#include "GameManager.h"
-
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "Keyboard.h"
 #include "Object.h"
 #include "Player.h"
-#include "Sprite.h"
 #include "Timer.h"
 #include "Window.h"
 
-GameManager *GameManager::instance = nullptr;
+GameManager* GameManager::instance = nullptr;
 
-GameManager::GameManager()
-{
-    
-}
+GameManager::GameManager() {}
 
 void GameManager::start()
 {
     Keyboard keyboard = Keyboard();
     setKeyboard(&keyboard);
-    
+
     Timer timer = Timer();
     setTimer(&timer);
-    
+
     createObject<Player>();
-    
+
     while (mp_window->isOpen())
     {
         // creating objects
@@ -53,7 +46,7 @@ void GameManager::start()
 
         // update objects
         updateObjects();
-        
+
         // render
         mp_window->clear();
         render();

@@ -7,5 +7,5 @@ public:
     Missile();
     virtual ~Missile() {}
 
-    float mp_cooldown = 2000.0f;
+    float mp_cooldown = 2.0f;
 };

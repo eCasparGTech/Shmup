@@ -5,10 +5,12 @@
 #include "Projectile.h"
 #include "Window.h"
 
+
+
 Player::Player()
 {
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
-    m_position = { dimensions.x * 0.5f, dimensions.y * 0.5f };
+    setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
 }
 
 void Player::handleInput()
@@ -20,22 +22,22 @@ void Player::handleInput()
 
     if (keyboard->keyDown(KeyCode::up))
     {
-        distance.y -= m_moveSpeed;
+        distance.y -= 1;
     }
 
     if (keyboard->keyDown(KeyCode::down))
     {
-        distance.y += m_moveSpeed;
+        distance.y += 1;
     }
 
     if (keyboard->keyDown(KeyCode::right))
     {
-        distance.x += m_moveSpeed;
+        distance.x += 1;
     }
 
     if (keyboard->keyDown(KeyCode::left))
     {
-        distance.x -= m_moveSpeed;
+        distance.x -= 1;
     }
 
     if (keyboard->keyDown(KeyCode::space))
@@ -43,6 +45,8 @@ void Player::handleInput()
         Attack(Projectile);
     }
 
+    move(distance);
+    
     /*if (keyboard->keyPress(KeyCode::space))
     {
         sf::Vector2f destination = {200.0f, 200.0f};
@@ -54,7 +58,6 @@ void Player::handleInput()
         goToDestination();
     }*/
 
-    move(&distance);
 }
 
 void Player::update()

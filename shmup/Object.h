@@ -4,7 +4,6 @@
 
 class GameManager;
 
-// a class without using libraries like sfml or std
 class Object
 {
 public:

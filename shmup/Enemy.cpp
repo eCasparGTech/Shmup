@@ -16,7 +16,7 @@ void Enemy::update()
     switch (m_state)
     {
     case idle:
-        if (Object::getDistance(this, player) <= 100)
+        if (getDistance(this, player) <= 100)
         {
             m_state = chasing;
         }
@@ -26,7 +26,7 @@ void Enemy::update()
         }
         break;
     case wandering:
-        if (Object::getDistance(this, player) <= 100)
+        if (getDistance(this, player) <= 100)
         {
             m_state = chasing;
         }

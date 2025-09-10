@@ -1,15 +1,23 @@
 ﻿#include "Entity.h"
-
-#include <iostream>
-#include <ostream>
-
 #include "framework.h"
 #include "GameManager.h"
 #include "Timer.h"
 
+static float length(const sf::Vector2f& v)
+{
+    return std::sqrt(v.x * v.x + v.y * v.y);
+}
+
+static sf::Vector2f normalize(const sf::Vector2f& v)
+{
+    float len = length(v);
+    if (len <= 1e-6f) return {0.f, 0.f};
+    return {v.x / len, v.y / len};
+}
+
 Entity::Entity()
 {
-    m_moveSpeed = 0.4f;
+    m_moveSpeed = 200.0f;
     m_timer = mp_gameManager->getTimer();
 
     m_hasDestination = false;
@@ -18,56 +26,69 @@ Entity::Entity()
     m_direction = up;
 }
 
-void Entity::move(sf::Vector2f* direction)
+void Entity::move(const sf::Vector2f& inputDirection)
 {
-    float speed = m_moveSpeed * static_cast<float>(m_timer->getDelta());
-    m_position += *direction * speed;
+    sf::Vector2f dir = normalize(inputDirection);
+    if (dir.x == 0.f && dir.y == 0.f) return;
+
+    float dt = m_timer ? m_timer->getDelta() : 0.f;
+    float step = m_moveSpeed * dt;
+
+    m_position += dir * step;
     setPosition(m_position);
 }
 
-void Entity::setDestination(sf::Vector2f* destination)
+void Entity::move(Direction direction)
 {
-    m_destination = *destination;
+    move(toVector(direction));
+}
+
+void Entity::setDestination(const sf::Vector2f& destination)
+{
+    m_destination = destination;
     m_hasDestination = true;
 }
 
-
 Entity::Direction Entity::getRandomDirection()
 {
-    return static_cast<Direction>(rand() % 4);
+    return static_cast<Direction>(std::rand() % 4);
 }
 
 void Entity::goToDestination()
 {
     if (!m_hasDestination) return;
-    sf::Vector2f difference = m_destination - m_position;
-    if (Object::getDistance(&m_position, &m_destination) > 5)
+
+    sf::Vector2f diff = m_destination - m_position;
+    float dist = length(diff);
+    float dt = m_timer ? m_timer->getDelta() : 0.f;
+    float step = m_moveSpeed * dt;
+
+    if (dist <= 0.001f || step >= dist)
     {
-        sf::Vector2f direction = {
-            difference.x / (static_cast<int>(difference.x) == 0 ? 1 : abs(difference.x)),
-            difference.y / (static_cast<int>(difference.y) == 0 ? 1 : abs(difference.y))
-        };
-        move(&direction);
+        m_position = m_destination;
+        m_hasDestination = false;
+        setPosition(m_position);
+        return;
     }
+
+    sf::Vector2f dir = diff / dist;
+    m_position += dir * step;
+    setPosition(m_position);
 }
 
-sf::Vector2f* Entity::getDirection()
+sf::Vector2f Entity::getDirection() const
 {
-    sf::Vector2f* direction = new sf::Vector2f();
-    switch (m_direction)
+    return toVector(m_direction);
+}
+
+sf::Vector2f Entity::toVector(Direction direction)
+{
+    switch (direction)
     {
-    case up:
-        *direction = {0.0f, -1.0f};
-        break;
-    case down:
-         *direction = {0.0f, 1.0f};
-        break;
-    case left:
-         *direction = {-1.0f, 0.0f};
-        break;
-    case right:
-         *direction = {1.0f, 0.0f};
-        break;
+    case up:    return { 0.f, -1.f };
+    case down:  return { 0.f,  1.f };
+    case left:  return {-1.f,  0.f };
+    case right: return { 1.f,  0.f };
+    default:    return { 0.f,  0.f };
     }
-    return direction;
 }

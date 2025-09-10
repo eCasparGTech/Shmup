@@ -4,9 +4,9 @@
 
 Projectile::Projectile()
 {
-    m_moveSpeed = 1.0f;
+    m_moveSpeed = 500.0f;
     mp_birthtime = Timer::getTime();
-    mp_lifetime = 500.0f;
+    mp_lifetime = 0.5f;
 }
 
 void Projectile::update()
@@ -15,7 +15,7 @@ void Projectile::update()
     
     move(getDirection());
 
-    float age = static_cast<float>(Timer::getTime() - mp_birthtime);
+    float age = Timer::getTime() - mp_birthtime;
     if (age >= mp_lifetime)
     {
         mp_gameManager->destroyObject(this);

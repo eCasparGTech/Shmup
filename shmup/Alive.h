@@ -17,6 +17,6 @@ public:
     void Attack(AttackType attackType);
     
 private:
-    unsigned int mp_attackTime;
-    unsigned int mp_attackCooldown;
+    float mp_attackTime;
+    float mp_attackCooldown;
 };
