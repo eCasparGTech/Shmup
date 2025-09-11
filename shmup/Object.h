@@ -10,6 +10,8 @@ public:
     Object();
     virtual ~Object() { delete mp_sprite; }
 
+    static constexpr float CONTACT_EPS = 1.0f;
+    
     sf::Vector2f m_position;
     Sprite* mp_sprite;
 
@@ -34,15 +36,21 @@ public:
     // function rotate
     //void rotate(float rotation);
 
-    // function scale
-    //void scale(float width, float height);
-
     static float getDistance(Object* objectA, Object* objectB);
     static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
-    bool isColliding(Object* objectA, Object* objectB);
-    bool isColliding(sf::Vector2f positionA, sf::Vector2f sizeA, sf::Vector2f positionB, sf::Vector2f sizeB);
+
+    static bool isOverlappingStrict(sf::Vector2f aPos, sf::Vector2f aSize,
+                                    sf::Vector2f bPos, sf::Vector2f bSize);
+
+    static bool isTouchingOrOverlapping(sf::Vector2f aPos, sf::Vector2f aSize,
+                                        sf::Vector2f bPos, sf::Vector2f bSize,
+                                        float eps = CONTACT_EPS);
+    
+    static bool isColliding(sf::Vector2f aPos, sf::Vector2f aSize,
+                            sf::Vector2f bPos, sf::Vector2f bSize);
+    static bool isColliding(Object* a, Object* b);
     bool isCollidingWith(Object* objectB);
-    bool wouldCollideAt(sf::Vector2f& aPosition, sf::Vector2f& aSize);
+    bool wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& aSize) const;
 
     virtual void onCollisionEnter(Object* other) {}
     virtual void onCollisionStay(Object* other) {}

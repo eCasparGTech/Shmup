@@ -80,17 +80,33 @@ float Object::getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
     );
 }
 
+bool Object::isOverlappingStrict(sf::Vector2f aPos, sf::Vector2f aSize,
+                                 sf::Vector2f bPos, sf::Vector2f bSize)
+{
+    return aPos.x < bPos.x + bSize.x &&
+        aPos.x + aSize.x > bPos.x &&
+        aPos.y < bPos.y + bSize.y &&
+        aPos.y + aSize.y > bPos.y;
+}
+
+bool Object::isTouchingOrOverlapping(sf::Vector2f aPos, sf::Vector2f aSize,
+                                     sf::Vector2f bPos, sf::Vector2f bSize,
+                                     float eps)
+{
+    bool x = (aPos.x <= bPos.x + bSize.x + eps) && (aPos.x + aSize.x >= bPos.x - eps);
+    bool y = (aPos.y <= bPos.y + bSize.y + eps) && (aPos.y + aSize.y >= bPos.y - eps);
+    return x && y;
+}
+
+bool Object::isColliding(sf::Vector2f aPos, sf::Vector2f aSize,
+                         sf::Vector2f bPos, sf::Vector2f bSize)
+{
+    return isTouchingOrOverlapping(aPos, aSize, bPos, bSize, CONTACT_EPS);
+}
+
 bool Object::isColliding(Object* a, Object* b)
 {
     return isColliding(a->m_position, a->getSize(), b->m_position, b->getSize());
-}
-
-bool Object::isColliding(sf::Vector2f aPosition, sf::Vector2f aSize, sf::Vector2f bPosition, sf::Vector2f bSize)
-{
-    return aPosition.x < bPosition.x + bSize.x
-        && aPosition.x + aSize.x > bPosition.x
-        && aPosition.y < bPosition.y + bSize.y
-        && aPosition.y + aSize.y > bPosition.y;
 }
 
 bool Object::isCollidingWith(Object* objectB)
@@ -98,17 +114,16 @@ bool Object::isCollidingWith(Object* objectB)
     return isColliding(this, objectB);
 }
 
-
-bool Object::wouldCollideAt(sf::Vector2f& aPosition, sf::Vector2f& aSize)
+bool Object::wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& aSize) const
 {
     for (Object* bObject : mp_gameManager->getObjects())
     {
         if (bObject == this) continue;
         if (bObject->getType() != ObjectType::TObstacle) continue;
 
-        sf::Vector2f bPosition = bObject->getPosition();
-        sf::Vector2f oSize = bObject->getSize();
-        if (isColliding(aPosition, aSize, bPosition, oSize))
+        const sf::Vector2f bPosition = bObject->getPosition();
+        const sf::Vector2f bSize = bObject->getSize();
+        if (isOverlappingStrict(aPosition, aSize, bPosition, bSize))
             return true;
     }
     return false;
