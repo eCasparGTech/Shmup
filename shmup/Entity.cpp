@@ -1,7 +1,5 @@
 ﻿#include "Entity.h"
 
-#include <SFML/System/Time.hpp>
-
 #include "framework.h"
 #include "GameManager.h"
 #include "Timer.h"
@@ -99,23 +97,21 @@ void Entity::goToDestination()
 {
     if (!m_hasDestination) return;
 
-    sf::Vector2f diff = m_destination - m_position;
-    float dist = length(diff);
-    float dt = m_timer ? m_timer->getDelta() : 0.f;
-    float step = m_moveSpeed * dt;
+    sf::Vector2f difference = m_destination - m_position;
+    float distance = length(difference);
+    float step = m_moveSpeed * m_timer->getDelta();
+    float max = abs(std::max(difference.x, difference.y));
 
-    if (dist <= 0.001f || step >= dist)
+    if (step >= distance || max == 0.0f)
     {
-        m_position = m_destination;
         m_hasDestination = false;
         m_destinationReached = true;
-        setPosition(m_position);
         return;
     }
 
-    sf::Vector2f dir = diff / dist;
-    m_position += dir * step;
-    setPosition(m_position);
+    std::cout << "max: " << max << std::endl;
+    sf::Vector2f inputDirection = { difference.x / max, difference.y / max };
+    move(inputDirection);
 }
 
 sf::Vector2f Entity::getDirection() const
