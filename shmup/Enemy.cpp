@@ -19,7 +19,8 @@ void Enemy::start()
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.1f});
     setSize({15.0f, 15.0f});
-    mp_sprite->setColor({0, 150, 0, 255});
+    mp_sprite->baseColor = {0, 150, 0, 255};
+    mp_sprite->setColor(mp_sprite->baseColor);
     m_movingState = idle;
     m_moveSpeed = 100.0f;
 
@@ -217,4 +218,13 @@ void Enemy::attack()
 {
     m_moveSpeed *= 3;
     setDestination(mp_player->m_position);
+}
+
+void Enemy::onCollisionEnter(Object* other)
+{
+    Alive::onCollisionEnter(other);
+    if (other->getType() == ObjectType::TProjectile)
+    {
+        takeDamage(1);
+    }
 }

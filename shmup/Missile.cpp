@@ -14,7 +14,7 @@ void Missile::start()
 }
 
 void Missile::onCollisionEnter(Object* object) {
-    if (object->getType() == TObstacle)
+    if (object->getType() == TObstacle || object->getType() == TEnemy)
     {
         mp_gameManager->destroyObject(this);
     }

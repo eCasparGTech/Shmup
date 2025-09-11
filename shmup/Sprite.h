@@ -17,6 +17,7 @@ public:
 
     void setPosition(sf::Vector2f position);
 
+    sf::Color baseColor = sf::Color::White;
     void setColor(sf::Color color);
 
     sf::RectangleShape m_drawable;
