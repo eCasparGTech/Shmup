@@ -61,5 +61,9 @@ void Alive::takeDamage(int damage)
 
 void Alive::die()
 {
+    if (this->getType() == TEnemy)
+    {
+        mp_gameManager->addEnemies(-1);
+    }
     mp_gameManager->destroyObject(this);
 }

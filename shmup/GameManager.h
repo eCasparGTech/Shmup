@@ -20,6 +20,8 @@ public:
     GameManager();
     virtual ~GameManager() {}
 
+    auto spawnEnemies() -> void;
+    void addEnemies(int count);
     void start();
     void setWindow(Window* pWindow);
     void subscribe(Object* pObject);
@@ -59,4 +61,5 @@ private:
     std::vector<Object*> mp_pendingObjectList;
     std::vector<Object*> mp_objectToDestroy;
     std::unordered_map<Object*, std::unordered_set<Object*>> m_prevCollisions;
+    unsigned int mp_enemyCount = 0;
 };
