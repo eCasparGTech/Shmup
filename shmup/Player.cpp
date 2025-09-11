@@ -12,9 +12,12 @@ void Player::start()
     setType(ObjectType::TPlayer);
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setSize({15.0f, 15.0f});
-    mp_sprite->setColor({0, 0, 200, 255});
+    mp_sprite->baseColor = {0, 0, 200, 255};
+    mp_sprite->setColor(mp_sprite->baseColor);
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
     keyboard = mp_gameManager->getKeyboard();
+    m_aimDirection = { 0.0f, -1.0f };
+    m_aimAngle = 0.0f;
 }
 
 void Player::handleInput()
@@ -59,7 +62,9 @@ void Player::update()
 
 void Player::onCollisionEnter(Object* other)
 {
-    if (other->getType() == ObjectType::TObstacle)
+    Alive::onCollisionEnter(other);
+    
+    if (other->getType() == ObjectType::TEnemy)
     {
         mp_sprite->setColor({255, 0, 0, 255});
     }
@@ -68,5 +73,9 @@ void Player::onCollisionEnter(Object* other)
 void Player::onCollisionExit(Object* other)
 {
     Alive::onCollisionExit(other);
-    mp_sprite->setColor({0, 0, 200, 255});
+
+    if (other->getType() == ObjectType::TEnemy)
+    {
+        mp_sprite->setColor(mp_sprite->baseColor);
+    }
 }

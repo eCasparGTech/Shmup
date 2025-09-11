@@ -38,17 +38,24 @@ void Projectile::start()
             }
         }
     }
-    
-    sf::Vector2f projectileDifference = nearest->getPosition() - player->m_position;
-    float max = std::max(abs(projectileDifference.x), abs(projectileDifference.y));
-    mp_direction = { projectileDifference.x / max, projectileDifference.y / max };
 
-    float pi = 3.14159265358979323846f;
-    
-    float angleRad = std::atan2(projectileDifference.x, -projectileDifference.y);
-    float angleDeg = angleRad * 180.f / static_cast<float>(pi);
+    if (nearest != nullptr)
+    {
+        sf::Vector2f projectileDifference = nearest->getPosition() - player->m_position;
+        float max = std::max(abs(projectileDifference.x), abs(projectileDifference.y));
 
-    mp_sprite->setRotation(angleDeg);
+        player->m_aimDirection= { projectileDifference.x / max, projectileDifference.y / max };
+
+        float pi = 3.14159265358979323846f;
+    
+        float angleRad = std::atan2(projectileDifference.x, -projectileDifference.y);
+        float angleDeg = angleRad * 180.f / static_cast<float>(pi);
+
+        player->m_aimAngle = angleDeg;
+    }
+    
+    mp_direction = player->m_aimDirection;
+    mp_sprite->setRotation(player->m_aimAngle);
 }
 
 void Projectile::update()
