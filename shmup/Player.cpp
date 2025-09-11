@@ -16,6 +16,8 @@ void Player::start()
     mp_sprite->setColor(mp_sprite->baseColor);
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
     keyboard = mp_gameManager->getKeyboard();
+    m_aimDirection = { 0.0f, -1.0f };
+    m_aimAngle = 0.0f;
 }
 
 void Player::handleInput()

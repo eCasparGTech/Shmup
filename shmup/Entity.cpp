@@ -28,7 +28,6 @@ void Entity::start()
     m_hasDestination = false;
     m_enabled = true;
     m_visible = true;
-    m_direction = up;
 
     // Anti-stuck: init défaut (ajustable)
     m_stuckTimeThreshold = 1.0f; // 1 seconde
@@ -127,11 +126,6 @@ void Entity::goToDestination()
 
     sf::Vector2f inputDirection = {difference.x / max, difference.y / max};
     move(inputDirection);
-}
-
-sf::Vector2f Entity::getDirection() const
-{
-    return toVector(m_direction);
 }
 
 sf::Vector2f Entity::toVector(Direction direction)

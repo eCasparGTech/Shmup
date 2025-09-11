@@ -15,6 +15,9 @@ public:
     void onCollisionExit(Object* other) override;
     void handleInput();
 
+    sf::Vector2f m_aimDirection;
+    float m_aimAngle;
+
 private:
     Keyboard* keyboard;
 };

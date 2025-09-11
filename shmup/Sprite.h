@@ -13,6 +13,7 @@ public:
     void setWidth(float width);
     void setHeight(float height);
     void setSize(sf::Vector2f shape);
+    void setRotation(float angle);
 
     void setPosition(sf::Vector2f position);
     virtual void start();

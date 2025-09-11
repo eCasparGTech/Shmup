@@ -37,7 +37,6 @@ public:
 
     float m_moveSpeed;
     Timer* m_timer;
-    Direction m_direction;
 
 protected:
     bool m_enabled;

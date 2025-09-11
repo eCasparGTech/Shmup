@@ -37,7 +37,7 @@ void Alive::Attack(AttackType attackType)
     case Projectile:
         if (Timer::getTime() - mp_attackTime < mp_attackCooldown) break;
         Missile* missile = mp_gameManager->createObject<Missile>();
-        sf::Vector2f spawnPosition = { getPosition().x + getSize().x * 0.5f - missile->getSize().x * 0.5f, getPosition().y };
+        sf::Vector2f spawnPosition = getPosition() + getSize() * 0.5f - missile->getSize() * 0.5f;
         missile->setPosition(spawnPosition);
         mp_attackTime = Timer::getTime();
         break;
@@ -61,5 +61,9 @@ void Alive::takeDamage(int damage)
 
 void Alive::die()
 {
+    if (this->getType() == TEnemy)
+    {
+        mp_gameManager->addEnemies(-1);
+    }
     mp_gameManager->destroyObject(this);
 }

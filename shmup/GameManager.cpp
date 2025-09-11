@@ -19,7 +19,6 @@ void GameManager::start()
 {
     mp_player = createObject<Player>();
     createObject<Obstacle>();
-    createObject<Enemy>();
 
     createUI<PV>();
 
@@ -81,6 +80,9 @@ void GameManager::start()
         // update objects
         updateObjects();
 
+        // spawn enemies
+        spawnEnemies();
+
         // check collisions
         checkCollisions();
 
@@ -100,7 +102,9 @@ void GameManager::setWindow(Window* pWindow)
 
 void GameManager::destroyObject(Object* object)
 {
-    if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end()) return;
+    if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end() ||
+        std::find(mp_objectToDestroy.begin(), mp_objectToDestroy.end(), object) != mp_objectToDestroy.end())
+        return;
     mp_objectToDestroy.push_back(object);
 }
 
@@ -171,6 +175,23 @@ Timer* GameManager::getTimer()
 Player* GameManager::getPlayer()
 {
     return mp_player;
+}
+
+void GameManager::spawnEnemies()
+{
+    if (mp_enemyCount < 15)
+    {
+        if (std::rand() % 1000 == 0)
+        {
+            createObject<Enemy>();
+            addEnemies(1);
+        }
+    }
+}
+
+void GameManager::addEnemies(int count)
+{
+    mp_enemyCount += count;
 }
 
 void GameManager::checkCollisions()

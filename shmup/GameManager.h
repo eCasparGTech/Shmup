@@ -22,6 +22,8 @@ public:
     GameManager();
     virtual ~GameManager() {}
 
+    auto spawnEnemies() -> void;
+    void addEnemies(int count);
     void start();
     void setWindow(Window* pWindow);
     void render();
@@ -89,4 +91,5 @@ private:
     std::vector<Sprite*> mp_spriteList;
     std::vector<Sprite*> mp_pendingSpriteList;
     std::vector<Sprite*> mp_spriteToDestroy;
+    unsigned int mp_enemyCount = 0;
 };
