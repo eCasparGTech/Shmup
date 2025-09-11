@@ -34,11 +34,37 @@ void Entity::move(const sf::Vector2f& inputDirection)
     sf::Vector2f dir = normalize(inputDirection);
     if (dir.x == 0.f && dir.y == 0.f) return;
 
-    float dt = m_timer ? m_timer->getDelta() : 0.f;
-    float step = m_moveSpeed * dt;
+    const float dt   = m_timer ? m_timer->getDelta() : 0.f;
+    const float step = m_moveSpeed * dt;
 
-    m_position += dir * step;
-    setPosition(m_position);
+    // Tentative diagonale
+    sf::Vector2f next = m_position + dir * step;
+    sf::Vector2f size = getSize();
+    if (!wouldCollideAt(next, size)) {
+        m_position = next;
+        setPosition(m_position);
+        return;
+    }
+
+    bool moved = false;
+
+    if (dir.x != 0.f) {
+        sf::Vector2f nextX{ m_position.x + dir.x * step, m_position.y };
+        if (!wouldCollideAt(nextX, size)) {
+            m_position.x = nextX.x;
+            moved = true;
+        }
+    }
+
+    if (dir.y != 0.f) {
+        sf::Vector2f nextY{ m_position.x, m_position.y + dir.y * step };
+        if (!wouldCollideAt(nextY, size)) {
+            m_position.y = nextY.y;
+            moved = true;
+        }
+    }
+
+    if (moved) setPosition(m_position);
 }
 
 void Entity::move(Direction direction)

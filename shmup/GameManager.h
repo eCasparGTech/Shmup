@@ -31,6 +31,7 @@ public:
     void checkCollisions();
     void destroyObject(Object* object);
     Window* getWindow();
+    const std::vector<Object*>& getObjects() const;
 
     template <class T>
     T* createObject()

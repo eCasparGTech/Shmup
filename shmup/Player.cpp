@@ -59,7 +59,6 @@ void Player::update()
 
 void Player::onCollisionEnter(Object* other)
 {
-    std::cout << "Collision with " << other->getType() << std::endl;
     if (other->getType() == ObjectType::TObstacle)
     {
         mp_sprite->setColor({255, 0, 0, 255});
