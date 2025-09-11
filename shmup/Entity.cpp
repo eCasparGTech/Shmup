@@ -27,7 +27,6 @@ void Entity::start()
     m_hasDestination = false;
     m_enabled = true;
     m_visible = true;
-    m_direction = up;
 }
 
 void Entity::update()
@@ -111,11 +110,6 @@ void Entity::goToDestination()
     
     sf::Vector2f inputDirection = { difference.x / max, difference.y / max };
     move(inputDirection);
-}
-
-sf::Vector2f Entity::getDirection() const
-{
-    return toVector(m_direction);
 }
 
 sf::Vector2f Entity::toVector(Direction direction)

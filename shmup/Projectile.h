@@ -12,6 +12,9 @@ public:
     void start() override;
     void update() override;
 
+protected:
+    sf::Vector2f mp_direction;
+
 private:
     float mp_birthtime;
     float mp_lifetime;

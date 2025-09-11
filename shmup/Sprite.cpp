@@ -39,3 +39,8 @@ void Sprite::setSize(sf::Vector2f shape)
 {
     m_drawable.setSize(shape);
 }
+
+void Sprite::setRotation(float angle)
+{
+    m_drawable.setRotation(sf::degrees(angle));
+}
