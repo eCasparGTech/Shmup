@@ -27,7 +27,7 @@ public:
 private:
     float mp_attackTime;
     float mp_attackCooldown;
-    int mp_life = 50;
+    int mp_life = 20;
 
     bool  m_hitActive = false;
     float m_hitUntil  = 0.0f;

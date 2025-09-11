@@ -5,6 +5,8 @@
 #include "Timer.h"
 #include <cmath> // pour std::sqrt, std::abs
 
+#include "Window.h"
+
 static float length(const sf::Vector2f& v)
 {
     return std::sqrt(v.x * v.x + v.y * v.y);
@@ -63,6 +65,14 @@ void Entity::move(const sf::Vector2f& inputDirection)
     if (!wouldCollideAt(next, size))
     {
         m_position = next;
+
+        sf::Vector2u dimensionsInt = mp_gameManager->getWindow()->getDimensions();
+        sf::Vector2f dimensions = { static_cast<float>(dimensionsInt.x), static_cast<float>(dimensionsInt.y) };
+        if (m_position.x > dimensions.x) m_position.x = 1;
+        if (m_position.y > dimensions.y) m_position.y = 1;
+        if (m_position.x < 0) m_position.x = dimensions.x - 1;
+        if (m_position.y < 0) m_position.y = dimensions.y - 1;
+        
         setPosition(m_position);
         return;
     }
