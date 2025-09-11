@@ -4,6 +4,7 @@
 
 Projectile::Projectile()
 {
+    setType(ObjectType::TProjectile);
     m_moveSpeed = 500.0f;
     mp_birthtime = Timer::getTime();
     mp_lifetime = 5.0f;

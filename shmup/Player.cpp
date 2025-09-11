@@ -6,6 +6,7 @@
 
 Player::Player()
 {
+    setType(ObjectType::TPlayer);
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
     setSize({80.0f, 80.0f});
@@ -62,4 +63,16 @@ void Player::update()
 {
     Alive::update();
     handleInput();
+}
+
+void Player::onCollisionEnter(Object* other)
+{
+    std::cout << "Collision with " << other->getType() << std::endl;
+    if (other->getType() == ObjectType::TObstacle)
+    {
+        mp_sprite->setColor({255, 0, 0, 255});
+    } else
+    {
+        mp_sprite->setColor({0, 0, 200, 255});
+    }
 }

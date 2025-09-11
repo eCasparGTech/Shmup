@@ -27,6 +27,11 @@ void Object::setSize(sf::Vector2f size)
     setHeight(size.y);
 }
 
+sf::Vector2f Object::getSize()
+{
+    return {mp_width, mp_height};
+}
+
 void Object::update()
 {
     // collider
@@ -65,3 +70,23 @@ float Object::getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
         + (bPosition->y - aPosition->y) * (bPosition->y - aPosition->y)
     );
 }
+
+bool Object::isColliding(Object* objectA, Object* objectB)
+{
+    // check if rect is in rect
+    sf::Vector2f aPosition = objectA->m_position;
+    sf::Vector2f bPosition = objectB->m_position;
+    sf::Vector2f aSize = objectA->getSize();
+    sf::Vector2f bSize = objectB->getSize();
+    return aPosition.x < bPosition.x + bSize.x
+        && aPosition.x + aSize.x > bPosition.x
+        && aPosition.y < bPosition.y + bSize.y
+        && aPosition.y + aSize.y > bPosition.y;
+}
+
+bool Object::isCollidingWith(Object* objectB)
+{
+    return isColliding(this, objectB);
+}
+
+

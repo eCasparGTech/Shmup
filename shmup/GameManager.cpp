@@ -1,6 +1,7 @@
 ﻿#include "GameManager.h"
 #include "Keyboard.h"
 #include "Object.h"
+#include "Obstacle.h"
 #include "Player.h"
 #include "Timer.h"
 #include "Window.h"
@@ -18,6 +19,7 @@ void GameManager::start()
     setTimer(&timer);
 
     createObject<Player>();
+    createObject<Obstacle>();
 
     while (mp_window->isOpen())
     {
@@ -47,6 +49,9 @@ void GameManager::start()
         // update objects
         updateObjects();
 
+        // check collisions
+        checkCollisions();
+        
         // render
         mp_window->clear();
         render();
@@ -114,4 +119,25 @@ Timer* GameManager::getTimer()
 Player* GameManager::getPlayer()
 {
     return mp_player;
+}
+
+void GameManager::checkCollisions()
+{
+    for (Object* pObject : mp_objectList)
+    {
+        for (Object* pOtherObject : mp_objectList)
+        {
+            if (pObject == pOtherObject) continue;
+            if (pObject->isCollidingWith(pOtherObject))
+            {
+                pObject->onCollisionEnter(pOtherObject);
+                pOtherObject->onCollisionEnter(pObject);
+            }
+            else
+            {
+                pObject->onCollisionExit(pOtherObject);
+                pOtherObject->onCollisionExit(pObject);
+            }
+        }
+    }
 }

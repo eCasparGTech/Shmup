@@ -27,6 +27,7 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
+    void checkCollisions();
     void destroyObject(Object* object);
     Window* getWindow();
 

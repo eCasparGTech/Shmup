@@ -1,10 +1,10 @@
 ﻿#include "Enemy.h"
-
 #include "GameManager.h"
 #include "Player.h"
 
 Enemy::Enemy()
 {
+    setType(ObjectType::TEnemy);
     m_state = idle;
 }
 

@@ -23,6 +23,7 @@ public:
     void setHeight(float height);
 
     void setSize(sf::Vector2f size);
+    sf::Vector2f getSize();
 
     virtual void update();
 
@@ -36,9 +37,28 @@ public:
 
     static float getDistance(Object* objectA, Object* objectB);
     static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
+    bool isColliding(Object* objectA, Object* objectB);
+    bool isCollidingWith(Object* objectB);
+
+    virtual void onCollisionEnter(Object* other) {}
+    virtual void onCollisionExit(Object* other) {}
+
+    enum ObjectType
+    {
+        TObstacle = 0,
+        TPlayer = 1,
+        TProjectile = 2,
+        TEnemy = 3,
+        TCollectible = 4,
+        TWall = 5
+    };
+
+    ObjectType getType() { return mp_objectType; }
+    void setType(ObjectType type) { mp_objectType = type; }
 
 protected:
     GameManager* mp_gameManager = nullptr;
+    ObjectType mp_objectType;
 
 private:
     float mp_width;

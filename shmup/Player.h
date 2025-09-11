@@ -8,5 +8,6 @@ public:
     virtual ~Player(){}
 
     void update() override;
+    void onCollisionEnter(Object* other) override;
     void handleInput();
 };
