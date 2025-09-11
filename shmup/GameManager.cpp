@@ -175,7 +175,7 @@ Player* GameManager::getPlayer()
 
 void GameManager::spawnEnemies()
 {
-    if (mp_enemyCount < 15)
+    if (mp_enemyCount < 16)
     {
         if (std::rand() % 1000 == 0)
         {

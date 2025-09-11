@@ -9,7 +9,7 @@ void Missile::start()
     Projectile::start();
     
     //mp_sprite->m_drawable.set
-    setSize({5.0f, 10.0f});
+    setSize({4.0f, 12.0f});
     mp_sprite->setColor({255, 0, 0, 255});
 }
 
