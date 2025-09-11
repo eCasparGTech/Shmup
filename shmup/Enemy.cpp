@@ -2,6 +2,12 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "Window.h"
+#include "Timer.h"
+
+static float vlen(const sf::Vector2f& v)
+{
+    return std::sqrt(v.x * v.x + v.y * v.y);
+}
 
 Enemy::Enemy() {}
 
@@ -9,7 +15,7 @@ void Enemy::start()
 {
     Alive::start();
     setType(ObjectType::TEnemy);
-    
+
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.1f});
     setSize({15.0f, 15.0f});
@@ -26,18 +32,28 @@ void Enemy::start()
     m_attacking = false;
     m_charging = false;
     m_releasing = false;
+
+    // Anti-stuck: init
+    m_unstuckActive = false;
+    m_unstuckUntil = 0.0f;
+
+    setStuckParams(1.0f, 4.0f);
+
+    m_attackStartPos = m_position;
+    m_attackChargeStartTime = 0.0f;
+    m_minMoveBeforeDash = 4.0f;
 }
 
 void Enemy::update()
 {
     Alive::update();
-    
+
     if (mp_player == nullptr)
     {
         mp_player = mp_gameManager->getPlayer();
         return;
     }
-    
+
     if (m_destinationReached)
     {
         m_destinationReached = false;
@@ -61,6 +77,58 @@ void Enemy::update()
         m_sleeping = false;
     }
     if (m_sleeping) return;
+
+    if (m_unstuckActive)
+    {
+        if (Timer::getTime() >= m_unstuckUntil)
+        {
+            m_unstuckActive = false;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    // anti-stuck
+    if (isStuck())
+    {
+        if (m_attacking || m_charging || m_releasing)
+        {
+            m_attacking = false;
+            m_charging = false;
+            m_releasing = false;
+            m_moveSpeed = 100.0f;
+            m_hasDestination = false;
+        }
+
+        resetStuckProbe();
+
+        m_unstuckActive = true;
+        m_unstuckUntil = Timer::getTime() + 0.6f;
+
+        if (m_movingState == chasing && mp_player)
+        {
+            sf::Vector2f toPlayer = mp_player->m_position - m_position;
+            sf::Vector2f perp = {-toPlayer.y, toPlayer.x};
+            float len = vlen(perp);
+            if (len > 1e-4f)
+            {
+                sf::Vector2f dir = {perp.x / len, perp.y / len};
+                float side = (std::rand() % 2 == 0) ? 1.f : -1.f;
+                setDestination(m_position + dir * side * 160.f);
+            }
+            else
+            {
+                wander();
+            }
+        }
+        else
+        {
+            wander();
+        }
+        return;
+    }
 
     // Attack update
     if (m_attacking)
@@ -108,7 +176,8 @@ void Enemy::update()
         case chasing:
             if (getDistance(this, mp_player) <= 80)
             {
-                m_attacking = true;
+                if (!isStuck() && !m_unstuckActive)
+                    m_attacking = true;
                 break;
             }
             if (getDistance(this, mp_player) > 320)

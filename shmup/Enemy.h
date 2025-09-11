@@ -34,4 +34,11 @@ protected:
 
 private:
     Player* mp_player;
+
+    bool m_unstuckActive;
+    float m_unstuckUntil;
+
+    sf::Vector2f m_attackStartPos;
+    float m_attackChargeStartTime;
+    float m_minMoveBeforeDash;
 };

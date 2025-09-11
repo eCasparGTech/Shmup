@@ -30,6 +30,11 @@ public:
     static sf::Vector2f toVector(Direction direction);
     static Direction getRandomDirection();
 
+
+    void setStuckParams(float timeSeconds, float minMovePixels);
+    bool isStuck() const;
+    void resetStuckProbe();
+
     float m_moveSpeed;
     Timer* m_timer;
     Direction m_direction;
@@ -41,4 +46,12 @@ protected:
     sf::Vector2f m_destination;
     bool m_hasDestination;
     bool m_destinationReached;
+
+
+    void updateStuckDetector();
+    sf::Vector2f m_stuckLastPos;
+    float m_lastSignificantMoveTime;
+    float m_stuckTimeThreshold;
+    float m_stuckMinMove;
+    bool m_stuck;
 };

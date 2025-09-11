@@ -59,7 +59,9 @@ void Player::update()
 
 void Player::onCollisionEnter(Object* other)
 {
-    if (other->getType() == ObjectType::TObstacle)
+    Alive::onCollisionEnter(other);
+    
+    if (other->getType() == ObjectType::TEnemy)
     {
         mp_sprite->setColor({255, 0, 0, 255});
     }
@@ -68,5 +70,9 @@ void Player::onCollisionEnter(Object* other)
 void Player::onCollisionExit(Object* other)
 {
     Alive::onCollisionExit(other);
-    mp_sprite->setColor({0, 0, 200, 255});
+
+    if (other->getType() == ObjectType::TEnemy)
+    {
+        mp_sprite->setColor({0, 0, 200, 255});
+    }
 }
