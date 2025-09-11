@@ -6,4 +6,6 @@ class Obstacle: public Object
 public:
     Obstacle();
     virtual ~Obstacle() {}
+    
+    void start() override;
 };

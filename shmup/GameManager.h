@@ -38,6 +38,7 @@ public:
         static_assert(std::is_base_of<Object, T>::value, "T must derive from Object");
         T* object = new T();
         mp_pendingObjectList.push_back(object);
+        object->start();
         return object;
     }
 

@@ -1,12 +1,15 @@
 ﻿#pragma once
 #include "Alive.h"
 
+class Player;
+
 class Enemy : public Alive
 {
 public:
     Enemy();
     ~Enemy() {}
 
+    void start() override;
     void update() override;
     void wander();
 
@@ -20,4 +23,7 @@ protected:
     };
 
     State m_state;
+
+private:
+    Player* player;
 };

@@ -2,16 +2,18 @@
 #include "GameManager.h"
 #include "Player.h"
 
-Enemy::Enemy()
+Enemy::Enemy() {}
+
+void Enemy::start()
 {
+    Alive::start();
     setType(ObjectType::TEnemy);
     m_state = idle;
+    player = mp_gameManager->getPlayer();
 }
 
 void Enemy::update()
 {
-    Player* player = mp_gameManager->getPlayer();
-
     Alive::update();
     switch (m_state)
     {

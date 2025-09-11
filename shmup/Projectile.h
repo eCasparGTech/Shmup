@@ -9,6 +9,7 @@ public:
 
     enum ProjectileType {};
 
+    void start() override;
     void update() override;
 
 private:

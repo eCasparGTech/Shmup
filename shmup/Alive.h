@@ -9,6 +9,7 @@ public:
     Alive();
     virtual ~Alive() {}
 
+    void start() override;
     enum AttackType
     {
         Projectile = 0

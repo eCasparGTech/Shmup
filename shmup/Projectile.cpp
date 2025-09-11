@@ -2,8 +2,11 @@
 
 #include "GameManager.h"
 
-Projectile::Projectile()
+Projectile::Projectile() {}
+
+void Projectile::start()
 {
+    Entity::start();
     setType(ObjectType::TProjectile);
     m_moveSpeed = 500.0f;
     mp_birthtime = Timer::getTime();
@@ -22,5 +25,4 @@ void Projectile::update()
         mp_gameManager->destroyObject(this);
         return;
     }
-    
 }

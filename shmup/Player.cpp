@@ -4,8 +4,11 @@
 #include "Projectile.h"
 #include "Window.h"
 
-Player::Player()
+Player::Player() {}
+
+void Player::start()
 {
+    Alive::start();
     setType(ObjectType::TPlayer);
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});

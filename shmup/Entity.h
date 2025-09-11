@@ -17,6 +17,7 @@ public:
     Entity();
     virtual ~Entity() {}
 
+    void start() override;
     void move(const sf::Vector2f& inputDirection);
     void move(Direction direction);
 

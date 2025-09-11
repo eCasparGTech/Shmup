@@ -15,8 +15,11 @@ static sf::Vector2f normalize(const sf::Vector2f& v)
     return {v.x / len, v.y / len};
 }
 
-Entity::Entity()
+Entity::Entity() {}
+
+void Entity::start()
 {
+    Object::start();
     m_moveSpeed = 200.0f;
     m_timer = mp_gameManager->getTimer();
 
@@ -85,10 +88,10 @@ sf::Vector2f Entity::toVector(Direction direction)
 {
     switch (direction)
     {
-    case up:    return { 0.f, -1.f };
-    case down:  return { 0.f,  1.f };
-    case left:  return {-1.f,  0.f };
-    case right: return { 1.f,  0.f };
-    default:    return { 0.f,  0.f };
+    case up: return {0.f, -1.f};
+    case down: return {0.f, 1.f};
+    case left: return {-1.f, 0.f};
+    case right: return {1.f, 0.f};
+    default: return {0.f, 0.f};
     }
 }

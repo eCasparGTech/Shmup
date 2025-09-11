@@ -2,7 +2,9 @@
 
 #include "GameManager.h"
 
-Object::Object()
+Object::Object() {}
+
+void Object::start()
 {
     mp_sprite = new Sprite();
     mp_gameManager = GameManager::getInstance();
@@ -27,6 +29,7 @@ void Object::setSize(sf::Vector2f size)
 {
     setWidth(size.x);
     setHeight(size.y);
+    mp_sprite->setSize(size);
 }
 
 sf::Vector2f Object::getSize()
@@ -90,5 +93,3 @@ bool Object::isCollidingWith(Object* objectB)
 {
     return isColliding(this, objectB);
 }
-
-

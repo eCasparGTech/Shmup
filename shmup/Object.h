@@ -25,6 +25,7 @@ public:
     void setSize(sf::Vector2f size);
     sf::Vector2f getSize();
 
+    virtual void start();
     virtual void update();
 
     void setPosition(sf::Vector2f position);

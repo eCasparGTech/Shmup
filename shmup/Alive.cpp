@@ -3,8 +3,11 @@
 #include "GameManager.h"
 #include "Missile.h"
 
-Alive::Alive()
+Alive::Alive() {}
+
+void Alive::start()
 {
+    Entity::start();
     mp_attackTime = 0.0f;
     mp_attackCooldown = 0.1f;
 }
