@@ -29,8 +29,7 @@ void PV::setLife(int life)
         sf::Vector2f size = m_sprite->getSize() * 0.5f;
         m_spriteInside->setSize(size);
         m_spriteInside->setColor({255, 255, 255, 150});
-        sf::Vector2f m_spriteInsidePosition = position + size * 0.5f;
-        m_spriteInside->setPosition(m_spriteInsidePosition);
+        m_spriteInside->setPosition(position + size * 0.5f);
 
         m_sprites.push_back(m_sprite);
         m_sprites.push_back(m_spriteInside);

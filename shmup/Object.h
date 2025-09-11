@@ -30,7 +30,7 @@ public:
     virtual void start();
     virtual void update();
 
-    void setPosition(sf::Vector2f position);
+    virtual void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
 
     // function rotate

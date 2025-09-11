@@ -106,13 +106,18 @@ void GameManager::destroyObject(Object* object)
 
 void GameManager::destroyUI(UI* ui)
 {
-    if (std::find(mp_uiList.begin(), mp_uiList.end(), ui) == mp_uiList.end()) return;
+    if (std::find(mp_uiList.begin(), mp_uiList.end(), ui) == mp_uiList.end() ||
+        std::find(mp_uiToDestroy.begin(), mp_uiToDestroy.end(), ui) != mp_uiToDestroy.end())
+        return;
     mp_uiToDestroy.push_back(ui);
 }
 
 void GameManager::destroySprite(Sprite* sprite)
 {
-    if (std::find(mp_spriteList.begin(), mp_spriteList.end(), sprite) == mp_spriteList.end()) return;
+    if (std::find(mp_spriteList.begin(), mp_spriteList.end(), sprite) == mp_spriteList.end() ||
+        std::find(mp_spriteToDestroy.begin(), mp_spriteToDestroy.end(), sprite) != mp_spriteToDestroy.end())
+        return;
+    
     mp_spriteToDestroy.push_back(sprite);
 }
 
