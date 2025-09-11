@@ -14,6 +14,7 @@ public:
     void display();
     bool isOpen() const;
     void draw(Sprite& pSprite);
+    void draw(sf::Drawable& drawable);
     void setTitle(std::string title);
     sf::Vector2u getDimensions();
 

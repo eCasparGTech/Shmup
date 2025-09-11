@@ -2,10 +2,12 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <SFML/Graphics/Text.hpp>
 
 #include "Keyboard.h"
 #include "Player.h"
 
+class UI;
 class Window;
 class Keyboard;
 class Timer;
@@ -24,17 +26,27 @@ public:
     void addEnemies(int count);
     void start();
     void setWindow(Window* pWindow);
-    void subscribe(Object* pObject);
     void render();
     void updateObjects();
+    void updateUI();
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
     void checkCollisions();
     void destroyObject(Object* object);
+    void destroyUI(UI* ui);
+    void destroySprite(Sprite* sprite);
     Window* getWindow();
     const std::vector<Object*>& getObjects() const;
 
+    Sprite* createSprite()
+    {
+        Sprite* sprite = new Sprite();
+        mp_pendingSpriteList.push_back(sprite);
+        sprite->start();
+        return sprite;
+    }
+    
     template <class T>
     T* createObject()
     {
@@ -45,6 +57,16 @@ public:
         return object;
     }
 
+    template <class T>
+    T* createUI()
+    {
+        static_assert(std::is_base_of<UI, T>::value, "T must derive from Object");
+        T* ui = new T();
+        mp_pendingUIList.push_back(ui);
+        ui->start();
+        return ui;
+    }
+    
     static GameManager* getInstance()
     {
         if (instance == nullptr)
@@ -61,5 +83,13 @@ private:
     std::vector<Object*> mp_pendingObjectList;
     std::vector<Object*> mp_objectToDestroy;
     std::unordered_map<Object*, std::unordered_set<Object*>> m_prevCollisions;
+
+    std::vector<UI*> mp_uiList;
+    std::vector<UI*> mp_pendingUIList;
+    std::vector<UI*> mp_uiToDestroy;
+
+    std::vector<Sprite*> mp_spriteList;
+    std::vector<Sprite*> mp_pendingSpriteList;
+    std::vector<Sprite*> mp_spriteToDestroy;
     unsigned int mp_enemyCount = 0;
 };

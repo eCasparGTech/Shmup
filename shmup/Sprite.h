@@ -15,8 +15,8 @@ public:
     void setSize(sf::Vector2f shape);
     void setRotation(float angle);
 
-
     void setPosition(sf::Vector2f position);
+    virtual void start();
 
     sf::Color baseColor = sf::Color::White;
     void setColor(sf::Color color);
@@ -25,4 +25,5 @@ public:
 
 private:
     void updateOrigin();
+    GameManager* mp_gameManager;
 };

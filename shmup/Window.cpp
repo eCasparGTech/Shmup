@@ -38,6 +38,11 @@ void Window::draw(Sprite& pSprite)
     m_window.draw(pSprite.m_drawable);
 }
 
+void Window::draw(sf::Drawable& drawable)
+{
+    m_window.draw(drawable);
+}
+
 void Window::setTitle(std::string title)
 {
     m_window.setTitle(title);

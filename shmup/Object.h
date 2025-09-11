@@ -8,7 +8,7 @@ class Object
 {
 public:
     Object();
-    virtual ~Object() { delete mp_sprite; }
+    virtual ~Object();
 
     static constexpr float CONTACT_EPS = 1.0f;
     
