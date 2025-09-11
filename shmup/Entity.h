@@ -18,6 +18,8 @@ public:
     virtual ~Entity() {}
 
     void start() override;
+    void update() override;
+
     void move(const sf::Vector2f& inputDirection);
     void move(Direction direction);
 
@@ -38,4 +40,5 @@ protected:
 
     sf::Vector2f m_destination;
     bool m_hasDestination;
+    bool m_destinationReached;
 };

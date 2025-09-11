@@ -1,4 +1,6 @@
 ﻿#include "GameManager.h"
+
+#include "Enemy.h"
 #include "Keyboard.h"
 #include "Object.h"
 #include "Obstacle.h"
@@ -12,13 +14,9 @@ GameManager::GameManager() {}
 
 void GameManager::start()
 {
-    //Keyboard keyboard;
-    //setKeyboard(&keyboard);
-
-    Timer timer = Timer();
-
-    createObject<Player>();
+    mp_player = createObject<Player>();
     createObject<Obstacle>();
+    createObject<Enemy>();
 
     while (mp_window->isOpen())
     {
@@ -39,7 +37,7 @@ void GameManager::start()
 
         // timer update
         mp_timer.update();
-        if (mp_timer.getDelta() == 0) continue;
+        if (mp_timer.getDelta() == 0.0f) continue;
 
         // window events
         mp_window->pollEvents();

@@ -1,4 +1,7 @@
 ﻿#include "Entity.h"
+
+#include <SFML/System/Time.hpp>
+
 #include "framework.h"
 #include "GameManager.h"
 #include "Timer.h"
@@ -27,6 +30,15 @@ void Entity::start()
     m_enabled = true;
     m_visible = true;
     m_direction = up;
+}
+
+void Entity::update()
+{
+    Object::update();
+    if (m_hasDestination)
+    {
+        goToDestination();
+    }
 }
 
 void Entity::move(const sf::Vector2f& inputDirection)
@@ -70,6 +82,7 @@ void Entity::goToDestination()
     {
         m_position = m_destination;
         m_hasDestination = false;
+        m_destinationReached = true;
         setPosition(m_position);
         return;
     }

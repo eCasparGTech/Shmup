@@ -12,18 +12,26 @@ public:
     void start() override;
     void update() override;
     void wander();
+    void attack();
 
 protected:
-    enum State
+    bool m_sleeping;
+    float m_sleepTime;
+    float m_sleepDuration;
+
+    bool m_attacking;
+    bool m_charging;
+    bool m_releasing;
+
+    enum MovingState
     {
-        idle = 0,
-        wandering = 1,
-        chasing = 2,
-        attacking = 3
+        idle,
+        wandering,
+        chasing,
     };
 
-    State m_state;
+    MovingState m_movingState;
 
 private:
-    Player* player;
+    Player* mp_player;
 };
