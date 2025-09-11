@@ -17,13 +17,26 @@ GameManager::GameManager() {}
 
 void GameManager::start()
 {
-    mp_player = createObject<Player>();
-    createObject<Obstacle>();
+    std::srand(std::time(nullptr));
+
+    unsigned int obstacleCount = std::rand() % 17;
+    for (unsigned int i = 0; i < obstacleCount; i++)
+    {
+        createObject<Obstacle>();
+    }
+    
+    unsigned int playerSpawnDelay = 1;
+    unsigned int playerSpawnTimer = 0;
 
     createUI<PV>();
 
     while (mp_window->isOpen())
     {
+        if (playerSpawnTimer == playerSpawnDelay)
+        {
+            mp_player = createObject<Player>();
+        }
+        
         // creating objects
         for (Object* pObject : mp_pendingObjectList)
         {
@@ -92,6 +105,8 @@ void GameManager::start()
         mp_window->clear();
         render();
         mp_window->display();
+
+        if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
     }
 }
 
@@ -105,6 +120,10 @@ void GameManager::destroyObject(Object* object)
     if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end() ||
         std::find(mp_objectToDestroy.begin(), mp_objectToDestroy.end(), object) != mp_objectToDestroy.end())
         return;
+    if (object->isCollidingWith(mp_player))
+    {
+        mp_player->onCollisionExit(object);
+    }
     mp_objectToDestroy.push_back(object);
 }
 
@@ -125,7 +144,10 @@ Window* GameManager::getWindow()
     return mp_window;
 }
 
-const std::vector<Object*>& GameManager::getObjects() const { return mp_objectList; }
+const std::vector<Object*>& GameManager::getObjects() const
+{
+    return mp_objectList;
+}
 
 void GameManager::render()
 {
@@ -133,7 +155,7 @@ void GameManager::render()
     {
         mp_window->draw(*sprite);
     }
-    
+
     /*for (Object* pObject : mp_objectList)
     {
         mp_window->draw(*pObject->mp_sprite);

@@ -22,7 +22,7 @@ public:
     GameManager();
     virtual ~GameManager() {}
 
-    auto spawnEnemies() -> void;
+    void spawnEnemies();
     void addEnemies(int count);
     void start();
     void setWindow(Window* pWindow);

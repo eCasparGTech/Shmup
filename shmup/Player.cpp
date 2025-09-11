@@ -10,13 +10,28 @@ void Player::start()
 {
     Alive::start();
     setType(ObjectType::TPlayer);
-    sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setSize({15.0f, 15.0f});
     mp_sprite->baseColor = {0, 0, 200, 255};
     mp_sprite->setColor(mp_sprite->baseColor);
-    setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
+
+    sf::Vector2u dimensionsInt = mp_gameManager->getWindow()->getDimensions();
+    sf::Vector2f dimensions = {static_cast<float>(dimensionsInt.x), static_cast<float>(dimensionsInt.y)};
+
+    float randomX = ((std::rand() % 801) + 100) * 0.001f;
+    float randomY = ((std::rand() % 801) + 100) * 0.001f;
+    sf::Vector2f position = {dimensions.x * randomX, dimensions.y * randomY};
+    setPosition(position);
+
+    while (isCollidingWithAnyObstacle())
+    {
+        randomX = ((std::rand() % 801) + 100) * 0.001f;
+        randomY = ((std::rand() % 801) + 100) * 0.001f;
+        position = {dimensions.x * randomX, dimensions.y * randomY};
+        setPosition(position);
+    }
+
     keyboard = mp_gameManager->getKeyboard();
-    m_aimDirection = { 0.0f, -1.0f };
+    m_aimDirection = {0.0f, -1.0f};
     m_aimAngle = 0.0f;
 }
 
@@ -63,7 +78,7 @@ void Player::update()
 void Player::onCollisionEnter(Object* other)
 {
     Alive::onCollisionEnter(other);
-    
+
     if (other->getType() == ObjectType::TEnemy)
     {
         mp_sprite->setColor({255, 0, 0, 255});

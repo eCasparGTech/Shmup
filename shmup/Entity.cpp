@@ -62,7 +62,7 @@ void Entity::move(const sf::Vector2f& inputDirection)
     // Tentative diagonale
     sf::Vector2f next = m_position + dir * step;
     sf::Vector2f size = getSize();
-    if (!wouldCollideAt(next, size))
+    if (!wouldCollideAt(next, size) || wouldCollideAt(m_position, size))
     {
         m_position = next;
 

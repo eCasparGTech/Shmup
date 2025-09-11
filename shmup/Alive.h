@@ -31,5 +31,4 @@ private:
 
     bool  m_hitActive = false;
     float m_hitUntil  = 0.0f;
-    float m_sizeMultiplierOnHit = 1.2f;
 };

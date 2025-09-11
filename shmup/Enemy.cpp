@@ -15,10 +15,25 @@ void Enemy::start()
 {
     Alive::start();
     setType(ObjectType::TEnemy);
-
-    sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
-    setPosition({dimensions.x * 0.5f, dimensions.y * 0.1f});
+    
     setSize({15.0f, 15.0f});
+
+    sf::Vector2u dimensionsInt = mp_gameManager->getWindow()->getDimensions();
+    sf::Vector2f dimensions = {static_cast<float>(dimensionsInt.x), static_cast<float>(dimensionsInt.y)};
+
+    float randomX = ((std::rand() % 801) + 100) * 0.001f;
+    float randomY = ((std::rand() % 801) + 100) * 0.001f;
+    sf::Vector2f position = {dimensions.x * randomX, dimensions.y * randomY};
+    setPosition(position);
+
+    while (isCollidingWithAnyObstacle())
+    {
+        randomX = ((std::rand() % 801) + 100) * 0.001f;
+        randomY = ((std::rand() % 801) + 100) * 0.001f;
+        position = {dimensions.x * randomX, dimensions.y * randomY};
+        setPosition(position);
+    }
+    
     mp_sprite->baseColor = {0, 150, 0, 255};
     mp_sprite->setColor(mp_sprite->baseColor);
     m_movingState = idle;
@@ -43,6 +58,11 @@ void Enemy::start()
     m_attackStartPos = m_position;
     m_attackChargeStartTime = 0.0f;
     m_minMoveBeforeDash = 4.0f;
+    
+    if (wouldCollideAt(m_position, getSize()))
+    {
+        mp_gameManager->destroyObject(this);
+    }
 }
 
 void Enemy::update()

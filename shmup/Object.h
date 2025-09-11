@@ -50,6 +50,7 @@ public:
                             sf::Vector2f bPos, sf::Vector2f bSize);
     static bool isColliding(Object* a, Object* b);
     bool isCollidingWith(Object* objectB);
+    bool isCollidingWithAnyObstacle();
     bool wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& aSize) const;
 
     virtual void onCollisionEnter(Object* other) {}

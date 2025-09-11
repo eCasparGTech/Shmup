@@ -118,6 +118,21 @@ bool Object::isCollidingWith(Object* objectB)
     return isColliding(this, objectB);
 }
 
+bool Object::isCollidingWithAnyObstacle()
+{
+    for (Object* object : mp_gameManager->getObjects())
+    {
+        if (object->getType() == TObstacle)
+        {
+            if (isColliding(this, object))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool Object::wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& aSize) const
 {
     for (Object* bObject : mp_gameManager->getObjects())
