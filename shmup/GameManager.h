@@ -7,6 +7,7 @@
 #include "Keyboard.h"
 #include "Player.h"
 
+class PV;
 class UI;
 class Window;
 class Keyboard;
@@ -32,6 +33,7 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
+    PV* getPV();
     void checkCollisions();
     void destroyObject(Object* object);
     void destroyUI(UI* ui);
@@ -66,7 +68,9 @@ public:
         ui->start();
         return ui;
     }
+
     
+
     static GameManager* getInstance()
     {
         if (instance == nullptr)

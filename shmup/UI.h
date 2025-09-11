@@ -1,6 +1,6 @@
 #pragma once
 #include "Sprite.h"
-
+class GameManager;
 class UI
 {
 public:
@@ -9,8 +9,6 @@ public:
 
     virtual void start();
     virtual void update() {}
-
-    Sprite* m_sprite;
 
 protected:
     GameManager* mp_gameManager;

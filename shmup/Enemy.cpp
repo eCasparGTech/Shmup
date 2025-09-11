@@ -1,8 +1,11 @@
 ﻿#include "Enemy.h"
 #include "GameManager.h"
+#include "Heart.h"
 #include "Player.h"
 #include "Window.h"
 #include "Timer.h"
+
+class Heart;
 
 static float vlen(const sf::Vector2f& v)
 {
@@ -247,4 +250,15 @@ void Enemy::onCollisionEnter(Object* other)
     {
         takeDamage(1);
     }
+}
+
+void Enemy::die()
+{
+    if (std::rand() % 1 == 0)
+    {
+        Heart* heart = mp_gameManager->createObject<Heart>();
+        heart->setPosition(m_position);
+    }
+
+    Alive::die();
 }

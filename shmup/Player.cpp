@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "Keyboard.h"
 #include "Projectile.h"
+#include "PV.h"
 #include "Window.h"
 
 Player::Player() {}
@@ -33,6 +34,9 @@ void Player::start()
     keyboard = mp_gameManager->getKeyboard();
     m_aimDirection = {0.0f, -1.0f};
     m_aimAngle = 0.0f;
+
+    mp_pv = mp_gameManager->createUI<PV>();
+    heal(3);
 }
 
 void Player::handleInput()
@@ -69,6 +73,21 @@ void Player::handleInput()
     move(distance);
 }
 
+void Player::heal(int amount)
+{
+    Alive::heal(amount);
+    mp_pv->setLife(mp_life);
+}
+
+void Player::takeDamage(int damage)
+{
+    Alive::takeDamage(damage);
+
+    std::cout << "Take damage" << std::endl;
+
+    mp_pv->setLife(mp_life);
+}
+
 void Player::update()
 {
     Alive::update();
@@ -82,6 +101,7 @@ void Player::onCollisionEnter(Object* other)
     if (other->getType() == ObjectType::TEnemy)
     {
         mp_sprite->setColor({255, 0, 0, 255});
+        takeDamage(1);
     }
 }
 

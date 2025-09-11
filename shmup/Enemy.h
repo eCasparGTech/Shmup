@@ -33,6 +33,7 @@ protected:
     MovingState m_movingState;
 
     void onCollisionEnter(Object* other) override;
+    void die() override;
 
 private:
     Player* mp_player;

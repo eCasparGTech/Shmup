@@ -2,6 +2,8 @@
 
 #include "GameManager.h"
 
+class GameManager;
+
 UI::UI() {}
 
 void UI::start()

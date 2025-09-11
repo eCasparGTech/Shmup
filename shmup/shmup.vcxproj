@@ -136,10 +136,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Alive.h" />
+    <ClInclude Include="Collectible.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Object.h" />
@@ -158,9 +160,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Alive.cpp" />
+    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Object.cpp" />

@@ -7,15 +7,31 @@ PV::PV() : UI() {}
 void PV::start()
 {
     UI::start();
-    m_sprite = mp_gameManager->createSprite();
-    m_sprite->setSize({20.0f, 20.0f});
-    m_sprite->setColor(sf::Color::Red);
-    m_sprite->setPosition({10.0f, 10.0f});
+}
 
-    m_sprite2 = new Sprite();
-    m_sprite2->setSize({15.0f, 15.0f});
-    m_sprite2->setColor(sf::Color::White);
-    m_sprite2->setPosition({10.0f, 10.0f});
-
+void PV::setLife(int life)
+{
+    for (auto sprite : m_sprites)
+    {
+        mp_gameManager->destroySprite(sprite);
+    }
+    m_sprites.clear();
     
+    for (int i = 0; i < life; i++)
+    {
+        Sprite* m_sprite = mp_gameManager->createSprite();
+        m_sprite->setSize({10.0f, 10.0f});
+        m_sprite->setColor({255, 0, 0, 255});
+        sf::Vector2f position = {uiPosition.x + i * (uiGap.x + m_sprite->getSize().x), uiPosition.y};
+        m_sprite->setPosition(position);
+
+        Sprite* m_spriteInside = mp_gameManager->createSprite();
+        sf::Vector2f size = m_sprite->getSize() * 0.5f;
+        m_spriteInside->setSize(size);
+        m_spriteInside->setColor({255, 255, 255, 150});
+        m_spriteInside->setPosition(position + size * 0.5f);
+
+        m_sprites.push_back(m_sprite);
+        m_sprites.push_back(m_spriteInside);
+    }
 }

@@ -138,7 +138,7 @@ bool Object::wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& a
     for (Object* bObject : mp_gameManager->getObjects())
     {
         if (bObject == this) continue;
-        if (bObject->getType() == TProjectile || mp_objectType == TProjectile) continue;
+        if (bObject->getType() == TProjectile || mp_objectType == TProjectile || mp_objectType == TCollectible) continue;
 
         const sf::Vector2f bPosition = bObject->getPosition();
         const sf::Vector2f bSize = bObject->getSize();

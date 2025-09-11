@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Alive.h"
 
+class PV;
 class Keyboard;
 
 class Player : public Alive
@@ -14,10 +15,13 @@ public:
     void onCollisionEnter(Object* other) override;
     void onCollisionExit(Object* other) override;
     void handleInput();
+    void heal(int amount) override;
+    void takeDamage(int damage) override;
 
     sf::Vector2f m_aimDirection;
     float m_aimAngle;
 
 private:
+    PV* mp_pv = nullptr;
     Keyboard* keyboard;
 };
