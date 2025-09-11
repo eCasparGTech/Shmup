@@ -16,7 +16,7 @@ void GameManager::start()
 {
     mp_player = createObject<Player>();
     createObject<Obstacle>();
-    //createObject<Enemy>();
+    createObject<Enemy>();
 
     while (mp_window->isOpen())
     {
