@@ -48,7 +48,7 @@ void GameManager::start()
 
         // check collisions
         checkCollisions();
-        
+
         // render
         mp_window->clear();
         render();
@@ -130,10 +130,13 @@ void GameManager::checkCollisions()
             if (auto it = m_prevCollisions.find(a); it != m_prevCollisions.end())
                 seenBefore = it->second.count(b) > 0;
 
-            if (seenBefore) {
+            if (seenBefore)
+            {
                 a->onCollisionStay(b);
                 b->onCollisionStay(a);
-            } else {
+            }
+            else
+            {
                 a->onCollisionEnter(b);
                 b->onCollisionEnter(a);
             }
@@ -150,7 +153,8 @@ void GameManager::checkCollisions()
             if (!alive.count(b)) continue;
             auto it = curr.find(a);
             const bool stillColliding = (it != curr.end()) && it->second.count(b);
-            if (!stillColliding) {
+            if (!stillColliding)
+            {
                 a->onCollisionExit(b);
                 b->onCollisionExit(a);
             }

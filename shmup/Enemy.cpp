@@ -12,8 +12,8 @@ void Enemy::start()
     
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.1f});
-    setSize({80.0f, 80.0f});
-    mp_sprite->setColor({0, 200, 0, 255});
+    setSize({15.0f, 15.0f});
+    mp_sprite->setColor({0, 150, 0, 255});
     m_movingState = idle;
     m_moveSpeed = 100.0f;
 

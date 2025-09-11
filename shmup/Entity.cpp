@@ -73,7 +73,7 @@ void Entity::move(const sf::Vector2f& inputDirection)
             moved = true;
         }
     }
-
+    
     if (moved) setPosition(m_position);
 }
 

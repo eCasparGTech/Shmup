@@ -11,7 +11,7 @@ void Player::start()
     Alive::start();
     setType(ObjectType::TPlayer);
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
-    setSize({80.0f, 80.0f});
+    setSize({15.0f, 15.0f});
     mp_sprite->setColor({0, 0, 200, 255});
     setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
     keyboard = mp_gameManager->getKeyboard();
