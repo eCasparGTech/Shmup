@@ -77,6 +77,8 @@ Window* GameManager::getWindow()
     return mp_window;
 }
 
+const std::vector<Object*>& GameManager::getObjects() const { return mp_objectList; }
+
 void GameManager::render()
 {
     for (Object* pObject : mp_objectList)
@@ -110,7 +112,6 @@ Player* GameManager::getPlayer()
 
 void GameManager::checkCollisions()
 {
-    // Par sécurité: ignorer les objets détruits (si destruction a eu lieu avant cette étape)
     std::unordered_set<Object*> alive(mp_objectList.begin(), mp_objectList.end());
 
     std::unordered_map<Object*, std::unordered_set<Object*>> curr;
@@ -125,7 +126,6 @@ void GameManager::checkCollisions()
 
             if (!a->isCollidingWith(b)) continue;
 
-            // Était-ce déjà en collision à la frame précédente ? (on ne stocke que a->b)
             bool seenBefore = false;
             if (auto it = m_prevCollisions.find(a); it != m_prevCollisions.end())
                 seenBefore = it->second.count(b) > 0;
@@ -138,16 +138,16 @@ void GameManager::checkCollisions()
                 b->onCollisionEnter(a);
             }
 
-            curr[a].insert(b); // On ne stocke QUE a->b (i<j), jamais b->a
+            curr[a].insert(b);
         }
     }
 
     for (auto& [a, setB] : m_prevCollisions)
     {
-        if (!alive.count(a)) continue; // a détruit
+        if (!alive.count(a)) continue;
         for (Object* b : setB)
         {
-            if (!alive.count(b)) continue; // b détruit
+            if (!alive.count(b)) continue;
             auto it = curr.find(a);
             const bool stillColliding = (it != curr.end()) && it->second.count(b);
             if (!stillColliding) {

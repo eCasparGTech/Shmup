@@ -40,7 +40,9 @@ public:
     static float getDistance(Object* objectA, Object* objectB);
     static float getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition);
     bool isColliding(Object* objectA, Object* objectB);
+    bool isColliding(sf::Vector2f positionA, sf::Vector2f sizeA, sf::Vector2f positionB, sf::Vector2f sizeB);
     bool isCollidingWith(Object* objectB);
+    bool wouldCollideAt(sf::Vector2f& aPosition, sf::Vector2f& aSize);
 
     virtual void onCollisionEnter(Object* other) {}
     virtual void onCollisionStay(Object* other) {}
