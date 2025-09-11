@@ -8,10 +8,14 @@ public:
 
     void update();
     float getDelta();
+    unsigned int getDeltaMs();
     float getFps();
     static float getTime();
+    unsigned int getTimeMs();
 
 private:
     float m_sysTime;
     float m_deltaTime;
+    unsigned int m_sysTimeMs;
+    unsigned int m_deltaTimeMs;
 };

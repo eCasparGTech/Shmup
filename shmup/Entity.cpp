@@ -100,7 +100,7 @@ void Entity::goToDestination()
     sf::Vector2f difference = m_destination - m_position;
     float distance = length(difference);
     float step = m_moveSpeed * m_timer->getDelta();
-    float max = abs(std::max(difference.x, difference.y));
+    float max = std::max(abs(difference.x), abs(difference.y));
 
     if (step >= distance || max == 0.0f)
     {
@@ -108,8 +108,7 @@ void Entity::goToDestination()
         m_destinationReached = true;
         return;
     }
-
-    std::cout << "max: " << max << std::endl;
+    
     sf::Vector2f inputDirection = { difference.x / max, difference.y / max };
     move(inputDirection);
 }
