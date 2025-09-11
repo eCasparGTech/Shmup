@@ -20,5 +20,7 @@ void Projectile::update()
     if (age >= mp_lifetime)
     {
         mp_gameManager->destroyObject(this);
+        return;
     }
+    
 }

@@ -1,6 +1,9 @@
 ﻿#pragma once
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
+#include "Keyboard.h"
 #include "Player.h"
 
 class Window;
@@ -19,8 +22,6 @@ public:
 
     void start();
     void setWindow(Window* pWindow);
-    void setKeyboard(Keyboard* pKeyboard);
-    void setTimer(Timer* pTimer);
     void subscribe(Object* pObject);
     void render();
     void updateObjects();
@@ -42,17 +43,18 @@ public:
 
     static GameManager* getInstance()
     {
-        if (!instance)
+        if (instance == nullptr)
             instance = new GameManager();
         return instance;
     }
 
 private:
     Window* mp_window = nullptr;
-    Keyboard* mp_keyboard = nullptr;
-    Timer* mp_timer = nullptr;
+    Keyboard mp_keyboard;
+    Timer mp_timer;
     Player* mp_player = nullptr;
     std::vector<Object*> mp_objectList;
     std::vector<Object*> mp_pendingObjectList;
     std::vector<Object*> mp_objectToDestroy;
+    std::unordered_map<Object*, std::unordered_set<Object*>> m_prevCollisions;
 };

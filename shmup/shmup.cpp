@@ -14,10 +14,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    Window window = Window();
+    Window window;
 
     GameManager* gameManager = GameManager::getInstance();
     gameManager->setWindow(&window);
 
     gameManager->start();
+
+    return 0;
 }

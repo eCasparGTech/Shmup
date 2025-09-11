@@ -41,6 +41,7 @@ public:
     bool isCollidingWith(Object* objectB);
 
     virtual void onCollisionEnter(Object* other) {}
+    virtual void onCollisionStay(Object* other) {}
     virtual void onCollisionExit(Object* other) {}
 
     enum ObjectType

@@ -12,11 +12,10 @@ GameManager::GameManager() {}
 
 void GameManager::start()
 {
-    Keyboard keyboard = Keyboard();
-    setKeyboard(&keyboard);
+    //Keyboard keyboard;
+    //setKeyboard(&keyboard);
 
     Timer timer = Timer();
-    setTimer(&timer);
 
     createObject<Player>();
     createObject<Obstacle>();
@@ -39,12 +38,12 @@ void GameManager::start()
         mp_objectToDestroy.clear();
 
         // timer update
-        mp_timer->update();
-        if (mp_timer->getDelta() == 0) continue;
+        mp_timer.update();
+        if (mp_timer.getDelta() == 0) continue;
 
         // window events
         mp_window->pollEvents();
-        mp_window->setTitle("FPS: " + std::to_string(mp_timer->getFps()));
+        mp_window->setTitle("FPS: " + std::to_string(mp_timer.getFps()));
 
         // update objects
         updateObjects();
@@ -62,16 +61,6 @@ void GameManager::start()
 void GameManager::setWindow(Window* pWindow)
 {
     mp_window = pWindow;
-}
-
-void GameManager::setKeyboard(Keyboard* pKeyboard)
-{
-    mp_keyboard = pKeyboard;
-}
-
-void GameManager::setTimer(Timer* pTimer)
-{
-    mp_timer = pTimer;
 }
 
 void GameManager::subscribe(Object* pObject)
@@ -108,12 +97,12 @@ void GameManager::updateObjects()
 
 Keyboard* GameManager::getKeyboard()
 {
-    return mp_keyboard;
+    return &mp_keyboard;
 }
 
 Timer* GameManager::getTimer()
 {
-    return mp_timer;
+    return &mp_timer;
 }
 
 Player* GameManager::getPlayer()
@@ -123,21 +112,52 @@ Player* GameManager::getPlayer()
 
 void GameManager::checkCollisions()
 {
-    for (Object* pObject : mp_objectList)
+    // Par sécurité: ignorer les objets détruits (si destruction a eu lieu avant cette étape)
+    std::unordered_set<Object*> alive(mp_objectList.begin(), mp_objectList.end());
+
+    std::unordered_map<Object*, std::unordered_set<Object*>> curr;
+
+    const size_t n = mp_objectList.size();
+    for (size_t i = 0; i < n; ++i)
     {
-        for (Object* pOtherObject : mp_objectList)
+        Object* a = mp_objectList[i];
+        for (size_t j = i + 1; j < n; ++j)
         {
-            if (pObject == pOtherObject) continue;
-            if (pObject->isCollidingWith(pOtherObject))
-            {
-                pObject->onCollisionEnter(pOtherObject);
-                pOtherObject->onCollisionEnter(pObject);
+            Object* b = mp_objectList[j];
+
+            if (!a->isCollidingWith(b)) continue;
+
+            // Était-ce déjà en collision à la frame précédente ? (on ne stocke que a->b)
+            bool seenBefore = false;
+            if (auto it = m_prevCollisions.find(a); it != m_prevCollisions.end())
+                seenBefore = it->second.count(b) > 0;
+
+            if (seenBefore) {
+                a->onCollisionStay(b);
+                b->onCollisionStay(a);
+            } else {
+                a->onCollisionEnter(b);
+                b->onCollisionEnter(a);
             }
-            else
-            {
-                pObject->onCollisionExit(pOtherObject);
-                pOtherObject->onCollisionExit(pObject);
+
+            curr[a].insert(b); // On ne stocke QUE a->b (i<j), jamais b->a
+        }
+    }
+
+    for (auto& [a, setB] : m_prevCollisions)
+    {
+        if (!alive.count(a)) continue; // a détruit
+        for (Object* b : setB)
+        {
+            if (!alive.count(b)) continue; // b détruit
+            auto it = curr.find(a);
+            const bool stillColliding = (it != curr.end()) && it->second.count(b);
+            if (!stillColliding) {
+                a->onCollisionExit(b);
+                b->onCollisionExit(a);
             }
         }
     }
+
+    m_prevCollisions.swap(curr);
 }

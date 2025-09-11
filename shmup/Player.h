@@ -9,5 +9,6 @@ public:
 
     void update() override;
     void onCollisionEnter(Object* other) override;
+    void onCollisionExit(Object* other) override;
     void handleInput();
 };

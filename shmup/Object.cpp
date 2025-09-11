@@ -7,6 +7,8 @@ Object::Object()
     mp_sprite = new Sprite();
     mp_gameManager = GameManager::getInstance();
     m_position = sf::Vector2f(0.0f, 0.0f);
+    setSize({100.0f, 100.0f});
+    mp_sprite->setSize(getSize());
 }
 
 void Object::setWidth(float width)
