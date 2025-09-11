@@ -5,11 +5,9 @@
 #include "Object.h"
 #include "Obstacle.h"
 #include "Player.h"
-#include "PV.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Window.h"
-
 
 GameManager* GameManager::instance = nullptr;
 
@@ -19,8 +17,6 @@ void GameManager::start()
 {
     mp_player = createObject<Player>();
     createObject<Obstacle>();
-
-    createUI<PV>();
 
     while (mp_window->isOpen())
     {
@@ -133,7 +129,7 @@ void GameManager::render()
     {
         mp_window->draw(*sprite);
     }
-    
+
     /*for (Object* pObject : mp_objectList)
     {
         mp_window->draw(*pObject->mp_sprite);

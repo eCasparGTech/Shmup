@@ -30,6 +30,12 @@ void Alive::update()
     }
 }
 
+void Alive::heal(int amount)
+{
+    mp_life += amount;
+    if (mp_life > mp_maxLife) mp_life = mp_maxLife;
+}
+
 void Alive::Attack(AttackType attackType)
 {
     switch (attackType)
