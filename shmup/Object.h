@@ -29,6 +29,7 @@ public:
     virtual void update();
 
     void setPosition(sf::Vector2f position);
+    sf::Vector2f getPosition();
 
     // function rotate
     //void rotate(float rotation);

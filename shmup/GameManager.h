@@ -49,8 +49,8 @@ public:
         return instance;
     }
 
-private:
     Window* mp_window = nullptr;
+private:
     Keyboard mp_keyboard;
     Timer mp_timer;
     Player* mp_player = nullptr;

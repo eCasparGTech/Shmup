@@ -10,7 +10,6 @@ void Object::start()
     mp_gameManager = GameManager::getInstance();
     m_position = sf::Vector2f(0.0f, 0.0f);
     setSize({100.0f, 100.0f});
-    mp_sprite->setSize(getSize());
 }
 
 void Object::setWidth(float width)
@@ -46,6 +45,11 @@ void Object::setPosition(sf::Vector2f position)
 {
     m_position = position;
     mp_sprite->setPosition(position);
+}
+
+sf::Vector2f Object::getPosition()
+{
+    return m_position;
 }
 
 /*

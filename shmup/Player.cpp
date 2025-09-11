@@ -11,14 +11,14 @@ void Player::start()
     Alive::start();
     setType(ObjectType::TPlayer);
     sf::Vector2u dimensions = mp_gameManager->getWindow()->getDimensions();
-    setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
     setSize({80.0f, 80.0f});
     mp_sprite->setColor({0, 0, 200, 255});
+    setPosition({dimensions.x * 0.5f, dimensions.y * 0.5f});
+    keyboard = mp_gameManager->getKeyboard();
 }
 
 void Player::handleInput()
 {
-    Keyboard* keyboard = mp_gameManager->getKeyboard();
     keyboard->update();
 
     sf::Vector2f distance = {0.0f, 0.0f};
@@ -49,17 +49,6 @@ void Player::handleInput()
     }
 
     move(distance);
-
-    /*if (keyboard->keyPress(KeyCode::space))
-    {
-        sf::Vector2f destination = {200.0f, 200.0f};
-        setDestination(&destination);
-    }*/
-
-    /*if (m_hasDestination)
-    {
-        goToDestination();
-    }*/
 }
 
 void Player::update()
