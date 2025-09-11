@@ -3,11 +3,15 @@
 #include "GameManager.h"
 
 Object::Object() {}
+Object::~Object()
+{
+    mp_gameManager->destroySprite(mp_sprite);
+}
 
 void Object::start()
 {
-    mp_sprite = new Sprite();
     mp_gameManager = GameManager::getInstance();
+    mp_sprite = mp_gameManager->createSprite();
     m_position = sf::Vector2f(0.0f, 0.0f);
     setSize({100.0f, 100.0f});
 }

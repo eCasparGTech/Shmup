@@ -5,8 +5,11 @@
 #include "Object.h"
 #include "Obstacle.h"
 #include "Player.h"
+#include "PV.h"
 #include "Timer.h"
+#include "UI.h"
 #include "Window.h"
+
 
 GameManager* GameManager::instance = nullptr;
 
@@ -18,6 +21,8 @@ void GameManager::start()
     createObject<Obstacle>();
     createObject<Enemy>();
 
+    createUI<PV>();
+
     while (mp_window->isOpen())
     {
         // creating objects
@@ -27,6 +32,20 @@ void GameManager::start()
         }
         mp_pendingObjectList.clear();
 
+        // creating UI
+        for (UI* pUI : mp_pendingUIList)
+        {
+            mp_uiList.push_back(std::move(pUI));
+        }
+        mp_pendingUIList.clear();
+
+        // creating sprites
+        for (Sprite* sprite : mp_pendingSpriteList)
+        {
+            mp_spriteList.push_back(std::move(sprite));
+        }
+        mp_pendingSpriteList.clear();
+
         // destroying objects
         for (Object* pObject : mp_objectToDestroy)
         {
@@ -34,6 +53,22 @@ void GameManager::start()
             delete pObject;
         }
         mp_objectToDestroy.clear();
+
+        // destroying UI
+        for (UI* pUI : mp_uiToDestroy)
+        {
+            mp_uiList.erase(std::remove(mp_uiList.begin(), mp_uiList.end(), pUI), mp_uiList.end());
+            delete pUI;
+        }
+        mp_uiToDestroy.clear();
+
+        // destroying sprites
+        for (Sprite* sprite : mp_spriteToDestroy)
+        {
+            mp_spriteList.erase(std::remove(mp_spriteList.begin(), mp_spriteList.end(), sprite), mp_spriteList.end());
+            delete sprite;
+        }
+        mp_spriteToDestroy.clear();
 
         // timer update
         mp_timer.update();
@@ -49,6 +84,8 @@ void GameManager::start()
         // check collisions
         checkCollisions();
 
+        updateUI();
+
         // render
         mp_window->clear();
         render();
@@ -61,15 +98,22 @@ void GameManager::setWindow(Window* pWindow)
     mp_window = pWindow;
 }
 
-void GameManager::subscribe(Object* pObject)
-{
-    mp_pendingObjectList.push_back(pObject);
-}
-
 void GameManager::destroyObject(Object* object)
 {
     if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end()) return;
     mp_objectToDestroy.push_back(object);
+}
+
+void GameManager::destroyUI(UI* ui)
+{
+    if (std::find(mp_uiList.begin(), mp_uiList.end(), ui) == mp_uiList.end()) return;
+    mp_uiToDestroy.push_back(ui);
+}
+
+void GameManager::destroySprite(Sprite* sprite)
+{
+    if (std::find(mp_spriteList.begin(), mp_spriteList.end(), sprite) == mp_spriteList.end()) return;
+    mp_spriteToDestroy.push_back(sprite);
 }
 
 Window* GameManager::getWindow()
@@ -81,10 +125,21 @@ const std::vector<Object*>& GameManager::getObjects() const { return mp_objectLi
 
 void GameManager::render()
 {
-    for (Object* pObject : mp_objectList)
+    for (Sprite* sprite : mp_spriteList)
+    {
+        mp_window->draw(*sprite);
+    }
+    
+    /*for (Object* pObject : mp_objectList)
     {
         mp_window->draw(*pObject->mp_sprite);
     }
+
+    for (UI* pUI : mp_uiList)
+    {
+        std::cout << "Rendering UI\n";
+        mp_window->draw(*pUI->m_sprite);
+    }*/
 }
 
 void GameManager::updateObjects()
@@ -92,6 +147,14 @@ void GameManager::updateObjects()
     for (Object* pObject : mp_objectList)
     {
         pObject->update();
+    }
+}
+
+void GameManager::updateUI()
+{
+    for (UI* pUI : mp_uiList)
+    {
+        pUI->update();
     }
 }
 
