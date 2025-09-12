@@ -8,11 +8,11 @@ void AMMO::start()
 {
     UI::start();
 
-    m_barWidth = mp_gameManager->getWindow()->getDimensions().x * 0.8;
+    m_barWidth = mp_gameManager->getWindow()->getDimensions().x * 0.8f;
 
     float windowWidth = static_cast<float>(mp_gameManager->getWindow()->getDimensions().x);
-    uiPosition.x = (windowWidth - m_barWidth) * 0.5f;
-    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 20;
+    uiPosition.x = windowWidth * 0.5f;
+    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 20 + m_barHeight * 0.5f;
 }
 
 void AMMO::setMaxAmmo(int maxAmmo)
@@ -29,23 +29,25 @@ void AMMO::setMaxAmmo(int maxAmmo)
 
     if (maxAmmo <= 0) return;
 
-    // 1. Bordure
+    // 1. Bordure (centrée)
     m_border = mp_gameManager->createSprite();
     m_border->setSize({m_barWidth + 4.0f, m_barHeight + 4.0f});
     m_border->setColor({150, 150, 150, 100});
-    m_border->setPosition({uiPosition.x - 2.0f, uiPosition.y - 2.0f});
+    m_border->setPosition(uiPosition); // Le sprite se centre automatiquement
 
-    // 2. Fond
+    // 2. Fond (centré)
     m_background = mp_gameManager->createSprite();
     m_background->setSize({m_barWidth, m_barHeight});
     m_background->setColor({40, 40, 40, 100});
     m_background->setPosition(uiPosition);
 
-    // 3. Remplissage
+    // 3. Remplissage (aligné à gauche de la barre)
     m_fill = mp_gameManager->createSprite();
     m_fill->setSize({m_barWidth, m_barHeight});
     m_fill->setColor({255, 255, 255, 255});
-    m_fill->setPosition(uiPosition);
+
+    sf::Vector2f fillPosition = {uiPosition.x - m_barWidth * 0.5f + (m_barWidth * 0.5f), uiPosition.y};
+    m_fill->setPosition(fillPosition);
 
     m_barCreated = true;
     m_currentAmmo = -1;
@@ -71,4 +73,7 @@ void AMMO::setAmmo(int ammo)
 
     float fillWidth = m_barWidth * percentage;
     m_fill->setSize({fillWidth, m_barHeight});
+    
+    sf::Vector2f fillPosition = {uiPosition.x - m_barWidth * 0.5f + fillWidth * 0.5f, uiPosition.y};
+    m_fill->setPosition(fillPosition);
 }

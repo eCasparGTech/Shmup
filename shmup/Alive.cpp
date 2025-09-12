@@ -43,7 +43,7 @@ bool Alive::tryAttack(AttackType attackType)
     case Projectile:
         if (Timer::getTime() - mp_attackTime < mp_attackCooldown) return false;
         Missile* missile = mp_gameManager->createObject<Missile>();
-        sf::Vector2f spawnPosition = getPosition() + getSize() * 0.5f - missile->getSize() * 0.5f;
+        sf::Vector2f spawnPosition = getPosition();
         missile->setPosition(spawnPosition);
         mp_attackTime = Timer::getTime();
         return true;

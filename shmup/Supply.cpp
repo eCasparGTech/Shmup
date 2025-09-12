@@ -21,7 +21,8 @@ void Supply::start()
     mp_insideSprite->setSize(mp_sprite->getSize() * 0.5f);
     mp_insideSprite->baseColor = {0, 0, 0, 127};
     mp_insideSprite->setColor(mp_insideSprite->baseColor);
-    mp_insideSprite->setPosition(m_position + mp_insideSprite->getSize() * 0.5f);
+    
+    mp_insideSprite->setPosition(m_position);
 }
 
 void Supply::onCollisionEnter(Object* object)
@@ -38,5 +39,6 @@ void Supply::onCollisionEnter(Object* object)
 void Supply::setPosition(sf::Vector2f position)
 {
     Collectible::setPosition(position);
-    mp_insideSprite->setPosition(position + mp_insideSprite->getSize() * 0.5f);
+    
+    mp_insideSprite->setPosition(position);
 }

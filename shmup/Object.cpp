@@ -57,19 +57,6 @@ sf::Vector2f Object::getPosition()
     return m_position;
 }
 
-/*
-void Object::rotate(float rotation)
-{
-    m_rotation += rotation;
-}
-
-void Object::scale(float width, float height)
-{
-    m_width += width;
-    m_height += height;
-}
-*/
-
 float Object::getDistance(Object* objectA, Object* objectB)
 {
     sf::Vector2f aPosition = objectA->m_position;
@@ -88,18 +75,24 @@ float Object::getDistance(sf::Vector2f* aPosition, sf::Vector2f* bPosition)
 bool Object::isOverlappingStrict(sf::Vector2f aPos, sf::Vector2f aSize,
                                  sf::Vector2f bPos, sf::Vector2f bSize)
 {
-    return aPos.x < bPos.x + bSize.x &&
-        aPos.x + aSize.x > bPos.x &&
-        aPos.y < bPos.y + bSize.y &&
-        aPos.y + aSize.y > bPos.y;
+    sf::Vector2f aTopLeft = {aPos.x - aSize.x * 0.5f, aPos.y - aSize.y * 0.5f};
+    sf::Vector2f bTopLeft = {bPos.x - bSize.x * 0.5f, bPos.y - bSize.y * 0.5f};
+    
+    return aTopLeft.x < bTopLeft.x + bSize.x &&
+           aTopLeft.x + aSize.x > bTopLeft.x &&
+           aTopLeft.y < bTopLeft.y + bSize.y &&
+           aTopLeft.y + aSize.y > bTopLeft.y;
 }
 
 bool Object::isTouchingOrOverlapping(sf::Vector2f aPos, sf::Vector2f aSize,
                                      sf::Vector2f bPos, sf::Vector2f bSize,
                                      float eps)
 {
-    bool x = (aPos.x <= bPos.x + bSize.x + eps) && (aPos.x + aSize.x >= bPos.x - eps);
-    bool y = (aPos.y <= bPos.y + bSize.y + eps) && (aPos.y + aSize.y >= bPos.y - eps);
+    sf::Vector2f aTopLeft = {aPos.x - aSize.x * 0.5f, aPos.y - aSize.y * 0.5f};
+    sf::Vector2f bTopLeft = {bPos.x - bSize.x * 0.5f, bPos.y - bSize.y * 0.5f};
+    
+    bool x = (aTopLeft.x <= bTopLeft.x + bSize.x + eps) && (aTopLeft.x + aSize.x >= bTopLeft.x - eps);
+    bool y = (aTopLeft.y <= bTopLeft.y + bSize.y + eps) && (aTopLeft.y + aSize.y >= bTopLeft.y - eps);
     return x && y;
 }
 
