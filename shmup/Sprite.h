@@ -25,6 +25,10 @@ public:
 
     sf::Color baseColor = sf::Color::White;
     void setColor(sf::Color color);
+    
+    // NOUVELLES MÉTHODES
+    void setVisible(bool visible);
+    bool isVisible() const { return m_visible; }
 
     sf::RectangleShape m_drawable;
     sf::Text m_text;
@@ -33,4 +37,8 @@ public:
 private:
     void updateOrigin();
     GameManager* mp_gameManager;
+    
+    // NOUVEAU MEMBRE
+    bool m_visible = true;
+    sf::Color m_currentColor = sf::Color::White; // Pour restaurer la couleur
 };

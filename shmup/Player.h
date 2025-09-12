@@ -27,4 +27,5 @@ private:
     Keyboard* keyboard;
 
     unsigned int mp_ammoCount;
+    unsigned int mp_maxAmmoCount = 800;
 };

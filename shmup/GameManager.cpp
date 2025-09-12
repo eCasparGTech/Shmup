@@ -22,7 +22,8 @@ void GameManager::start()
 {
     std::srand(std::time(nullptr));
 
-    unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y * 0.00005);
+    unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y *
+        0.00005);
     unsigned int obstacleCount = std::rand() % maxObstacleCount;
     for (unsigned int i = 0; i < obstacleCount; i++)
     {
@@ -41,7 +42,7 @@ void GameManager::start()
         if (playerSpawnTimer == playerSpawnDelay)
         {
             m_pv = createUI<PV>();
-            //mp_ammo = createUI<AMMO>();
+            mp_ammo = createUI<AMMO>();
             m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
             mp_score = createUI<Score>();
@@ -138,7 +139,6 @@ void GameManager::start()
         mp_window->display();
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
-        if (mp_waveSpawnTimer <= waveSpawnDelay) mp_waveSpawnTimer++;
     }
 }
 
@@ -165,7 +165,6 @@ void GameManager::restartGame()
     m_prevCollisions.clear();
     mp_player = nullptr;
     m_enemyCount = 0;
-
     mp_scoreValue = 0;
 
     const auto dims = mp_window->getDimensions();
