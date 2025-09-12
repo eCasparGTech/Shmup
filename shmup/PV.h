@@ -1,6 +1,8 @@
 #pragma once
 #include "UI.h"
+
 class GameManager;
+
 class PV : public UI
 {
 public:

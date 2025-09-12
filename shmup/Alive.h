@@ -18,7 +18,7 @@ public:
         Projectile = 0
     };
 
-    void Attack(AttackType attackType);
+    bool tryAttack(AttackType attackType);
     virtual void takeDamage(int damage);
     virtual void die();
 
