@@ -38,7 +38,6 @@ void Player::start()
     m_aimAngle = 0.0f;
     
     heal(3);
-
     
     // Ammo
     mp_gameManager->mp_ammo->setMaxAmmo(mp_maxAmmoCount);
