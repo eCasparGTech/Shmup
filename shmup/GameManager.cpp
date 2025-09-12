@@ -44,12 +44,15 @@ void GameManager::start()
             mp_ammo = createUI<AMMO>();
             m_pv = createUI<PV>();
             m_gameOver = createUI<GameOver>();
+            m_waveNumber = createUI<WaveNumber>();
             mp_player = createObject<Player>();
             mp_score = createUI<Score>();
+            m_waveNumber->showWaveNumber();
         }
 
         if (mp_waveSpawnTimer == waveSpawnDelay)
         {
+            m_waveNumber->hideWaveNumber();
             mp_allowEnemies = true;
         }
 
@@ -290,6 +293,7 @@ void GameManager::nextWave()
     m_wave++;
     mp_ennemiesSpawnedInWave = 0;
     mp_waveSpawnTimer = 0;
+    m_waveNumber->showWaveNumber();
 }
 
 int GameManager::waveEnemyCount(int waveNumber)

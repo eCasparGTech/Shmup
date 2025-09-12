@@ -27,6 +27,7 @@ void Sprite::setHeight(float height)
 void Sprite::setPosition(sf::Vector2f position)
 {
     m_drawable.setPosition(position);
+    m_text.setPosition(position);
 }
 
 void Sprite::start() {}

@@ -8,6 +8,10 @@ public:
     virtual ~WaveNumber() {};
     
     virtual void start() override;
-    
-    void displayWaveNumber();
+
+    void showWaveNumber();
+    void hideWaveNumber();
+
+private:
+    Sprite* mp_waveNumberText = nullptr;
 };
