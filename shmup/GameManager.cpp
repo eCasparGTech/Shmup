@@ -36,6 +36,9 @@ void GameManager::start()
     unsigned int waveSpawnDelay = 3000;
     mp_waveSpawnTimer = 0;
     mp_waveEnnemies = 10;
+
+    unsigned int fpsDelay = 1000;
+    unsigned int fpsTimer = 0;
     
     while (mp_window->isOpen())
     {
@@ -120,7 +123,12 @@ void GameManager::start()
 
         // window events
         mp_window->pollEvents();
-        mp_window->setTitle("FPS: " + std::to_string(mp_timer.getFps()));
+
+        if (fpsTimer == fpsDelay)
+        {
+            mp_window->setTitle(std::to_string(static_cast<int>(std::ceil(mp_timer.getFps()))) + " FPS");
+            fpsTimer = 0;
+        }
 
         // keyboard update
         mp_keyboard.update();
@@ -143,6 +151,7 @@ void GameManager::start()
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
         if (mp_waveSpawnTimer <= waveSpawnDelay) mp_waveSpawnTimer++;
+        if (fpsTimer <= fpsDelay) fpsTimer++;
     }
 }
 

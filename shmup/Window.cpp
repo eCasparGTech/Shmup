@@ -4,7 +4,7 @@
 
 Window::Window()
 {
-    m_window = sf::RenderWindow(sf::VideoMode({ 584, 876 }), "SFML works!", sf::Style::Close);
+    m_window = sf::RenderWindow(sf::VideoMode({ 584, 876 }), "Shmup", sf::Style::Close);
 }
 
 void Window::pollEvents()
