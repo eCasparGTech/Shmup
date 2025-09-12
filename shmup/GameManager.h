@@ -6,7 +6,9 @@
 
 #include "Keyboard.h"
 #include "Player.h"
+#include "Score.h"
 
+class Score;
 class PV;
 class GameOver;
 class UI;
@@ -81,10 +83,26 @@ public:
     PV* m_pv = nullptr;
 	AMMO* mp_ammo = nullptr;
 
+    void setScore(int score)
+    {
+        mp_scoreValue = score;
+        mp_score->updateScore();
+    }
+
+    void addScore(int score)
+    {
+        mp_scoreValue += score;
+        mp_score->updateScore();
+    }
+
+    int getScore() { return mp_scoreValue; }
+
 private:
     Keyboard mp_keyboard;
     Timer mp_timer;
     Player* mp_player = nullptr;
+    Score* mp_score = 0;
+    int mp_scoreValue = 0;
     std::vector<Object*> mp_objectList;
     std::vector<Object*> mp_pendingObjectList;
     std::vector<Object*> mp_objectToDestroy;

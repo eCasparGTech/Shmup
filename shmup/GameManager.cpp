@@ -10,7 +10,9 @@
 #include "Timer.h"
 #include "UI.h"
 #include "Window.h"
+#include "Score.h"
 
+class Score;
 GameManager* GameManager::instance = nullptr;
 
 GameManager::GameManager() {}
@@ -37,6 +39,7 @@ void GameManager::start()
             mp_ammo = createUI<AMMO>();
             m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
+            mp_score = createUI<Score>();
         }
         
         // creating objects
