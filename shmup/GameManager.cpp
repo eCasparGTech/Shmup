@@ -41,8 +41,8 @@ void GameManager::start()
     {
         if (playerSpawnTimer == playerSpawnDelay)
         {
-            m_pv = createUI<PV>();
             mp_ammo = createUI<AMMO>();
+            m_pv = createUI<PV>();
             m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
             mp_score = createUI<Score>();

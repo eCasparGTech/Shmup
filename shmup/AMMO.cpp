@@ -7,82 +7,68 @@ AMMO::AMMO() : UI() {}
 void AMMO::start()
 {
     UI::start();
-    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 10;
-    
-    float availableWidth = static_cast<float>(mp_gameManager->getWindow()->getDimensions().x) - 20.0f; 
-    m_maxAmmoPerBar = static_cast<int>(std::floor(availableWidth / 3.0f)); 
+
+    m_barWidth = mp_gameManager->getWindow()->getDimensions().x * 0.8;
+
+    float windowWidth = static_cast<float>(mp_gameManager->getWindow()->getDimensions().x);
+    uiPosition.x = (windowWidth - m_barWidth) * 0.5f;
+    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 20;
 }
 
 void AMMO::setMaxAmmo(int maxAmmo)
 {
-    if (m_maxAmmo == maxAmmo) return;
-    
-    for (auto& bar : m_ammoBars) {
-        mp_gameManager->destroySprite(bar.border); 
-        mp_gameManager->destroySprite(bar.background);
-        mp_gameManager->destroySprite(bar.fill);
-    }
-    m_ammoBars.clear();
-    
     m_maxAmmo = maxAmmo;
-    if (maxAmmo <= 0) return;
-    
-    int barCount = static_cast<int>(std::ceil(static_cast<float>(maxAmmo) / static_cast<float>(m_maxAmmoPerBar)));
-    float barWidth = static_cast<float>(mp_gameManager->getWindow()->getDimensions().x) - 20.0f;
-    
-    for (int i = 0; i < barCount; i++) {
-        AmmoBar bar;
-        float yPos = uiPosition.y - (static_cast<float>(i) * m_barSpacing);
-        
-        int ammoInThisBar = std::min(m_maxAmmoPerBar, maxAmmo - (i * m_maxAmmoPerBar));
-        bar.maxAmmoInBar = ammoInThisBar;
-        bar.maxWidth = (static_cast<float>(ammoInThisBar) / static_cast<float>(m_maxAmmoPerBar)) * barWidth;
-        
-        // 1. Bordure en arrière-plan
-        bar.border = mp_gameManager->createSprite();
-        bar.border->setSize({bar.maxWidth + 4.0f, m_barHeight + 4.0f});
-        bar.border->setColor({100, 100, 100, 100});
-        bar.border->setPosition({uiPosition.x - 2.0f, yPos - 2.0f});
-        
-        // 2. Fond de la barre
-        bar.background = mp_gameManager->createSprite();
-        bar.background->setSize({bar.maxWidth, m_barHeight});
-        bar.background->setColor({30, 30, 30, 100});
-        bar.background->setPosition({uiPosition.x, yPos});
-        
-        // 3. Barre de remplissage par-dessus
-        bar.fill = mp_gameManager->createSprite();
-        bar.fill->setSize({bar.maxWidth, m_barHeight});
-        bar.fill->setColor({255, 255, 255, 255});
-        bar.fill->setPosition({uiPosition.x, yPos});
-        
-        m_ammoBars.push_back(bar);
+
+    if (m_barCreated)
+    {
+        mp_gameManager->destroySprite(m_border);
+        mp_gameManager->destroySprite(m_background);
+        mp_gameManager->destroySprite(m_fill);
+        m_barCreated = false;
     }
-    
+
+    if (maxAmmo <= 0) return;
+
+    // 1. Bordure
+    m_border = mp_gameManager->createSprite();
+    m_border->setSize({m_barWidth + 4.0f, m_barHeight + 4.0f});
+    m_border->setColor({150, 150, 150, 100});
+    m_border->setPosition({uiPosition.x - 2.0f, uiPosition.y - 2.0f});
+
+    // 2. Fond
+    m_background = mp_gameManager->createSprite();
+    m_background->setSize({m_barWidth, m_barHeight});
+    m_background->setColor({40, 40, 40, 100});
+    m_background->setPosition(uiPosition);
+
+    // 3. Remplissage
+    m_fill = mp_gameManager->createSprite();
+    m_fill->setSize({m_barWidth, m_barHeight});
+    m_fill->setColor({255, 255, 255, 255});
+    m_fill->setPosition(uiPosition);
+
+    m_barCreated = true;
     m_currentAmmo = -1;
 }
 
 void AMMO::setAmmo(int ammo)
 {
     if (m_currentAmmo == ammo) return;
-    
-    if (m_ammoBars.empty() && ammo > 0) {
+
+    if (!m_barCreated)
+    {
         setMaxAmmo(std::max(ammo, 100));
     }
-    
+
     m_currentAmmo = ammo;
-    int ammoRemaining = ammo;
-    
-    for (auto& bar : m_ammoBars) {
-        if (ammoRemaining <= 0) {
-            bar.fill->setSize({0.0f, m_barHeight});
-        } else {
-            int ammoInThisBar = std::min(bar.maxAmmoInBar, ammoRemaining);
-            float fillRatio = static_cast<float>(ammoInThisBar) / static_cast<float>(bar.maxAmmoInBar);
-            float fillWidth = bar.maxWidth * fillRatio;
-            
-            bar.fill->setSize({fillWidth, m_barHeight});
-            ammoRemaining -= ammoInThisBar;
-        }
+
+    float percentage = 0.0f;
+    if (m_maxAmmo > 0)
+    {
+        percentage = static_cast<float>(ammo) / static_cast<float>(m_maxAmmo);
+        percentage = std::max(0.0f, std::min(1.0f, percentage));
     }
+
+    float fillWidth = m_barWidth * percentage;
+    m_fill->setSize({fillWidth, m_barHeight});
 }

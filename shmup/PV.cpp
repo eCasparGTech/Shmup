@@ -1,12 +1,16 @@
 #include "PV.h"
 
 #include "GameManager.h"
+#include "Window.h"
 
 PV::PV() : UI() {}
 
 void PV::start()
 {
     UI::start();
+
+    uiPosition.x = mp_gameManager->mp_ammo->uiPosition.x;
+    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 50;
 }
 
 void PV::setLife(int life)
