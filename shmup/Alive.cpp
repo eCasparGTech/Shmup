@@ -25,6 +25,10 @@ void Alive::update()
         if (now >= m_hitUntil)
         {
             mp_sprite->setColor(mp_sprite->baseColor);
+            if (this->getType() == TPlayer)
+            {
+                mp_gameManager->m_hurtOverlay->hideHurtOverlay();
+            }
             m_hitActive = false;
         }
     }
@@ -56,6 +60,10 @@ void Alive::takeDamage(int damage)
     mp_life -= damage;
 
     mp_sprite->setColor({255, 0, 0, 255});
+    if (this->getType() == TPlayer)
+    {
+        mp_gameManager->m_hurtOverlay->showHurtOverlay();
+    }
     m_hitActive = true;
     m_hitUntil  = Timer::getTime() + 0.12f;
     

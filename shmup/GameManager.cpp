@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "GameOver.h"
+#include "HurtOverlay.h"
 #include "Keyboard.h"
 #include "Object.h"
 #include "ObjectType.h"
@@ -48,9 +49,11 @@ void GameManager::start()
             m_pv = createUI<PV>();
             m_gameOver = createUI<GameOver>();
             m_waveNumber = createUI<WaveNumber>();
-            mp_player = createObject<Player>();
+            m_hurtOverlay = createUI<HurtOverlay>();
             mp_score = createUI<Score>();
-            m_waveNumber->showWaveNumber();
+            mp_player = createObject<Player>();
+
+            if (m_waveNumber != nullptr) m_waveNumber->showWaveNumber();
         }
 
         if (mp_waveSpawnTimer == waveSpawnDelay)
@@ -64,8 +67,6 @@ void GameManager::start()
         {
             restartGame();
             playerSpawnTimer = 0;
-            mp_waveSpawnTimer = 0;
-            mp_allowEnemies = true;
         }
         
         // creating objects
@@ -190,8 +191,11 @@ void GameManager::restartGame()
         createObject<Obstacle>();
     }
 
+    mp_waveSpawnTimer = 0;
+    m_waveNumber = nullptr;
     m_wave = 0;
     mp_waveEnnemies = 10;
+    mp_ennemiesSpawnedInWave = 0;
 }
 
 void GameManager::setWindow(Window* pWindow)
@@ -290,7 +294,7 @@ void GameManager::spawnEnemies()
             addEnemies();
         }
     }
-    if (m_enemyCount == 0 && mp_ennemiesSpawnedInWave == mp_waveEnnemies)
+    if (mp_waveEnnemies != 0 && m_enemyCount == 0 && mp_ennemiesSpawnedInWave == mp_waveEnnemies)
     {
         mp_allowEnemies = false;
         nextWave();
@@ -302,7 +306,8 @@ void GameManager::nextWave()
     m_wave++;
     mp_ennemiesSpawnedInWave = 0;
     mp_waveSpawnTimer = 0;
-    m_waveNumber->showWaveNumber();
+
+    if (m_waveNumber != nullptr) m_waveNumber->showWaveNumber();
 }
 
 int GameManager::waveEnemyCount(int waveNumber)

@@ -143,6 +143,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="HurtOverlay.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Supply.h" />
     <ClInclude Include="Keyboard.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HurtOverlay.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Supply.cpp" />
     <ClCompile Include="GameOver.cpp" />

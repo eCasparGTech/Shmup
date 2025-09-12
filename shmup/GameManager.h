@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Graphics/Text.hpp>
 
+#include "HurtOverlay.h"
 #include "Keyboard.h"
 #include "Player.h"
 #include "Score.h"
@@ -85,6 +86,7 @@ public:
     Window* mp_window = nullptr;
     GameOver* m_gameOver = nullptr;
     WaveNumber* m_waveNumber = nullptr;
+    HurtOverlay* m_hurtOverlay = nullptr;
     PV* m_pv = nullptr;
 	AMMO* mp_ammo = nullptr;
 
