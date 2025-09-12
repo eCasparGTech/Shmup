@@ -101,7 +101,7 @@ void Player::takeDamage(int damage)
 {
     Alive::takeDamage(damage);
 
-    std::cout << "Take damage" << std::endl;
+    //std::cout << "Take damage" << std::endl;
 
     mp_pv->setLife(mp_life);
 }
