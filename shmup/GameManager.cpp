@@ -1,10 +1,12 @@
 ﻿#include "GameManager.h"
 
 #include "Enemy.h"
+#include "GameOver.h"
 #include "Keyboard.h"
 #include "Object.h"
 #include "Obstacle.h"
 #include "Player.h"
+#include "PV.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Window.h"
@@ -16,7 +18,8 @@ GameManager::GameManager() {}
 void GameManager::start()
 {
     std::srand(std::time(nullptr));
-
+    
+    
     unsigned int obstacleCount = std::rand() % 17;
     for (unsigned int i = 0; i < obstacleCount; i++)
     {
@@ -30,6 +33,8 @@ void GameManager::start()
     {
         if (playerSpawnTimer == playerSpawnDelay)
         {
+            m_pv = createUI<PV>();
+            m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
         }
         

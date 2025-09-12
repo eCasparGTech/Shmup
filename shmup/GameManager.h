@@ -8,6 +8,7 @@
 #include "Player.h"
 
 class PV;
+class GameOver;
 class UI;
 class Window;
 class Keyboard;
@@ -33,7 +34,6 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
-    PV* getPV();
     void checkCollisions();
     void destroyObject(Object* object);
     void destroyUI(UI* ui);
@@ -48,7 +48,7 @@ public:
         sprite->start();
         return sprite;
     }
-    
+
     template <class T>
     T* createObject()
     {
@@ -69,8 +69,6 @@ public:
         return ui;
     }
 
-    
-
     static GameManager* getInstance()
     {
         if (instance == nullptr)
@@ -79,6 +77,9 @@ public:
     }
 
     Window* mp_window = nullptr;
+    GameOver* m_gameOver = nullptr;
+    PV* m_pv = nullptr;
+
 private:
     Keyboard mp_keyboard;
     Timer mp_timer;

@@ -141,6 +141,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Heart.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Missile.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Missile.cpp" />

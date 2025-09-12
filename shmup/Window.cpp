@@ -36,6 +36,8 @@ bool Window::isOpen() const
 void Window::draw(Sprite& pSprite)
 {
     m_window.draw(pSprite.m_drawable);
+    if (pSprite.m_text.getString() != "")
+        m_window.draw(pSprite.m_text);
 }
 
 void Window::draw(sf::Drawable& drawable)

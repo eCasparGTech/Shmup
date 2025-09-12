@@ -52,6 +52,7 @@ void Alive::Attack(AttackType attackType)
 
 void Alive::takeDamage(int damage)
 {
+    if (mp_life <= 0) return;
     mp_life -= damage;
 
     mp_sprite->setColor({255, 0, 0, 255});

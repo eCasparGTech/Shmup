@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "GameManager.h"
+#include "GameOver.h"
 #include "Keyboard.h"
 #include "Projectile.h"
 #include "PV.h"
@@ -34,8 +35,7 @@ void Player::start()
     keyboard = mp_gameManager->getKeyboard();
     m_aimDirection = {0.0f, -1.0f};
     m_aimAngle = 0.0f;
-
-    mp_pv = mp_gameManager->createUI<PV>();
+    
     heal(3);
 }
 
@@ -76,16 +76,19 @@ void Player::handleInput()
 void Player::heal(int amount)
 {
     Alive::heal(amount);
-    mp_pv->setLife(mp_life);
+    mp_gameManager->m_pv->setLife(mp_life);
 }
 
 void Player::takeDamage(int damage)
 {
     Alive::takeDamage(damage);
+    mp_gameManager->m_pv->setLife(mp_life);
+}
 
-    std::cout << "Take damage" << std::endl;
-
-    mp_pv->setLife(mp_life);
+void Player::die()
+{
+    Alive::die();
+    mp_gameManager->m_gameOver->displayGameOver();
 }
 
 void Player::update()
