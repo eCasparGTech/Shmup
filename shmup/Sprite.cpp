@@ -62,3 +62,20 @@ void Sprite::setRotation(float angle)
 {
     m_drawable.setRotation(sf::degrees(angle));
 }
+
+void Sprite::setVisible(bool visible)
+{
+    if (m_visible == visible) return; // Pas de changement
+    
+    m_visible = visible;
+    
+    if (visible) {
+        // Restaurer la couleur normale
+        m_drawable.setFillColor(m_currentColor);
+    } else {
+        // Rendre transparent
+        sf::Color invisibleColor = m_currentColor;
+        invisibleColor.a = 0;
+        m_drawable.setFillColor(invisibleColor);
+    }
+}

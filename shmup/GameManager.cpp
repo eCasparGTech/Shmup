@@ -22,24 +22,25 @@ void GameManager::start()
 {
     std::srand(std::time(nullptr));
 
-    unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y * 0.00005);
+    unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y *
+        0.00005);
     unsigned int obstacleCount = std::rand() % maxObstacleCount;
     for (unsigned int i = 0; i < obstacleCount; i++)
     {
         createObject<Obstacle>();
     }
-    
+
     unsigned int playerSpawnDelay = 1;
     unsigned int playerSpawnTimer = 0;
 
     mp_allowEnemies = true;
-    
+
     while (mp_window->isOpen())
     {
         if (playerSpawnTimer == playerSpawnDelay)
         {
             m_pv = createUI<PV>();
-            //mp_ammo = createUI<AMMO>();
+            mp_ammo = createUI<AMMO>();
             m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
             mp_score = createUI<Score>();
@@ -52,7 +53,7 @@ void GameManager::start()
             playerSpawnTimer = 0;
             mp_allowEnemies = true;
         }
-        
+
         // creating objects
         for (Object* pObject : mp_pendingObjectList)
         {
@@ -144,7 +145,7 @@ void GameManager::restartGame()
     for (UI* pUI : mp_uiList) delete pUI;
     mp_uiList.clear();
     mp_uiToDestroy.clear();
-
+    
     for (Sprite* sprite : mp_spriteList) delete sprite;
     mp_spriteList.clear();
     mp_spriteToDestroy.clear();
@@ -152,11 +153,11 @@ void GameManager::restartGame()
     mp_pendingObjectList.clear();
     mp_pendingUIList.clear();
     mp_pendingSpriteList.clear();
-
+    
     m_prevCollisions.clear();
     mp_player = nullptr;
     mp_enemyCount = 0;
-
+    
     const auto dims = mp_window->getDimensions();
     unsigned int maxObstacleCount =
         static_cast<unsigned int>(dims.x * dims.y * 0.00005f);
@@ -198,7 +199,7 @@ void GameManager::destroySprite(Sprite* sprite)
     if (std::find(mp_spriteList.begin(), mp_spriteList.end(), sprite) == mp_spriteList.end() ||
         std::find(mp_spriteToDestroy.begin(), mp_spriteToDestroy.end(), sprite) != mp_spriteToDestroy.end())
         return;
-    
+
     mp_spriteToDestroy.push_back(sprite);
 }
 

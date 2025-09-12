@@ -24,6 +24,7 @@ void Player::start()
     sf::Vector2f position = {dimensions.x * randomX, dimensions.y * randomY};
     setPosition(position);
 
+
     while (isCollidingWithAnyObstacle())
     {
         randomX = ((std::rand() % 801) + 100) * 0.001f;
@@ -37,6 +38,10 @@ void Player::start()
     m_aimAngle = 0.0f;
     
     heal(3);
+
+    
+    // Ammo
+    mp_gameManager->mp_ammo->setMaxAmmo(mp_maxAmmoCount);
     giveAmmo(200);
 }
 
@@ -72,7 +77,7 @@ void Player::handleInput()
             if (attackSuccess)
             {
                 mp_ammoCount--;
-                //mp_gameManager->mp_ammo->setAmmo(mp_ammoCount);
+                mp_gameManager->mp_ammo->setAmmo(mp_ammoCount);
             }
         }
     }
@@ -89,9 +94,9 @@ void Player::heal(int amount)
 void Player::giveAmmo(int amount)
 {
     unsigned int ammoCount = mp_ammoCount + amount;
-    if (ammoCount > 800) ammoCount = 800;
+    if (ammoCount > mp_maxAmmoCount) ammoCount = mp_maxAmmoCount;
     mp_ammoCount = ammoCount;
-    //mp_gameManager->mp_ammo->setAmmo(ammoCount);
+    mp_gameManager->mp_ammo->setAmmo(ammoCount);
 }
 
 void Player::takeDamage(int damage)
