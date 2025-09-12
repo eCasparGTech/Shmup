@@ -11,8 +11,8 @@ void Obstacle::start()
     mp_sprite->baseColor = {127, 127, 127, 255};
     mp_sprite->setColor(mp_sprite->baseColor);
 
-    float randomW = std::rand() % 45;
-    float randomH = std::rand() % 80;
+    float randomW = (std::rand() % 36) + 10;
+    float randomH = (std::rand() % 71) + 10;
     setSize({randomW, randomH});
 
     sf::Vector2u dimensionsInt = mp_gameManager->getWindow()->getDimensions();

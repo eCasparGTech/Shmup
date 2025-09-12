@@ -1,20 +1,21 @@
 #pragma once
 #include "Collectible.h"
 
-class Heart: public Collectible
+class Supply: public Collectible
 {
 public:
-    Heart();
-    virtual ~Heart();
+    Supply();
+    virtual ~Supply();
 
     void start() override;
 
     int m_lifeHeal = 1;
+    int m_supplyAmmo = 200;
 
     void onCollisionEnter(Object* object) override;
 
     void setPosition(sf::Vector2f position) override;
     
 private:
-    Sprite* mp_insideHeart;
+    Sprite* mp_insideSprite;
 };

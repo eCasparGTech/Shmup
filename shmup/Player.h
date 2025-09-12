@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Alive.h"
+#include "AMMO.h"
 
 class Keyboard;
 
@@ -15,6 +16,7 @@ public:
     void onCollisionExit(Object* other) override;
     void handleInput();
     void heal(int amount) override;
+    void giveAmmo(int amount);
     void takeDamage(int damage) override;
     void die() override;
 
@@ -23,4 +25,6 @@ public:
 
 private:
     Keyboard* keyboard;
+
+    unsigned int mp_ammoCount;
 };

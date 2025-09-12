@@ -17,7 +17,7 @@ void Projectile::start()
 {
     Entity::start();
     setType(ObjectType::TProjectile);
-    m_moveSpeed = 500.0f;
+    m_moveSpeed = 400.0f;
     mp_birthtime = Timer::getTime();
     mp_lifetime = 4.0f;
 

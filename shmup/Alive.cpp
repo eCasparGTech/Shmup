@@ -36,17 +36,17 @@ void Alive::heal(int amount)
     if (mp_life > mp_maxLife) mp_life = mp_maxLife;
 }
 
-void Alive::Attack(AttackType attackType)
+bool Alive::tryAttack(AttackType attackType)
 {
     switch (attackType)
     {
     case Projectile:
-        if (Timer::getTime() - mp_attackTime < mp_attackCooldown) break;
+        if (Timer::getTime() - mp_attackTime < mp_attackCooldown) return false;
         Missile* missile = mp_gameManager->createObject<Missile>();
         sf::Vector2f spawnPosition = getPosition() + getSize() * 0.5f - missile->getSize() * 0.5f;
         missile->setPosition(spawnPosition);
         mp_attackTime = Timer::getTime();
-        break;
+        return true;
     }
 }
 

@@ -37,6 +37,7 @@ void Player::start()
     m_aimAngle = 0.0f;
     
     heal(3);
+    giveAmmo(200);
 }
 
 void Player::handleInput()
@@ -67,7 +68,15 @@ void Player::handleInput()
 
     if (keyboard->keyDown(KeyCode::space))
     {
-        Attack(Projectile);
+        if (mp_ammoCount > 0)
+        {
+            bool attackSuccess = tryAttack(Projectile);
+            if (attackSuccess)
+            {
+                mp_ammoCount--;
+                mp_ammo->setAmmo(mp_ammoCount);
+            }
+        }
     }
 
     move(distance);
@@ -77,6 +86,14 @@ void Player::heal(int amount)
 {
     Alive::heal(amount);
     mp_gameManager->m_pv->setLife(mp_life);
+}
+
+void Player::giveAmmo(int amount)
+{
+    unsigned int ammoCount = mp_ammoCount + amount;
+    if (ammoCount > 800) ammoCount = 800;
+    mp_ammoCount = ammoCount;
+    mp_ammo->setAmmo(ammoCount);
 }
 
 void Player::takeDamage(int damage)

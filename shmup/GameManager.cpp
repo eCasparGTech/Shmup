@@ -21,6 +21,9 @@ void GameManager::start()
     
     
     unsigned int obstacleCount = std::rand() % 17;
+
+    unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y * 0.00005);
+    unsigned int obstacleCount = std::rand() % maxObstacleCount;
     for (unsigned int i = 0; i < obstacleCount; i++)
     {
         createObject<Obstacle>();
@@ -207,9 +210,9 @@ Player* GameManager::getPlayer()
 
 void GameManager::spawnEnemies()
 {
-    if (mp_enemyCount < 16)
+    if (mp_enemyCount < 24)
     {
-        if (std::rand() % 1000 == 0)
+        if (std::rand() % 100 == 0)
         {
             createObject<Enemy>();
             addEnemies(1);
