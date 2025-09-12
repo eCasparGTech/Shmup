@@ -139,6 +139,7 @@ void GameManager::start()
         mp_window->display();
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
+        if (mp_waveSpawnTimer <= waveSpawnDelay) mp_waveSpawnTimer++;
     }
 }
 
