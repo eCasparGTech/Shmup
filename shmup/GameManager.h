@@ -79,6 +79,7 @@ public:
     Window* mp_window = nullptr;
     GameOver* m_gameOver = nullptr;
     PV* m_pv = nullptr;
+	AMMO* mp_ammo = nullptr;
 
 private:
     Keyboard mp_keyboard;

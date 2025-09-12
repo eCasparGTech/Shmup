@@ -18,9 +18,6 @@ GameManager::GameManager() {}
 void GameManager::start()
 {
     std::srand(std::time(nullptr));
-    
-    
-    unsigned int obstacleCount = std::rand() % 17;
 
     unsigned int maxObstacleCount = static_cast<int>(mp_window->getDimensions().x * mp_window->getDimensions().y * 0.00005);
     unsigned int obstacleCount = std::rand() % maxObstacleCount;
@@ -37,6 +34,7 @@ void GameManager::start()
         if (playerSpawnTimer == playerSpawnDelay)
         {
             m_pv = createUI<PV>();
+            mp_ammo = createUI<AMMO>();
             m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
         }
