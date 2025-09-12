@@ -32,7 +32,9 @@ void GameManager::start()
     unsigned int playerSpawnDelay = 1;
     unsigned int playerSpawnTimer = 0;
 
-    mp_allowEnemies = true;
+    unsigned int waveSpawnDelay = 3000;
+    mp_waveSpawnTimer = 0;
+    mp_waveEnnemies = 10;
     
     while (mp_window->isOpen())
     {
@@ -45,11 +47,17 @@ void GameManager::start()
             mp_score = createUI<Score>();
         }
 
+        if (mp_waveSpawnTimer == waveSpawnDelay)
+        {
+            mp_allowEnemies = true;
+        }
+
         // restart game
         if (mp_player == nullptr && mp_keyboard.keyRelease(KeyCode::enter))
         {
             restartGame();
             playerSpawnTimer = 0;
+            mp_waveSpawnTimer = 0;
             mp_allowEnemies = true;
         }
         
@@ -130,6 +138,7 @@ void GameManager::start()
         mp_window->display();
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
+        if (mp_waveSpawnTimer <= waveSpawnDelay) mp_waveSpawnTimer++;
     }
 }
 
@@ -155,7 +164,9 @@ void GameManager::restartGame()
 
     m_prevCollisions.clear();
     mp_player = nullptr;
-    mp_enemyCount = 0;
+    m_enemyCount = 0;
+
+    mp_scoreValue = 0;
 
     const auto dims = mp_window->getDimensions();
     unsigned int maxObstacleCount =
@@ -166,6 +177,9 @@ void GameManager::restartGame()
     {
         createObject<Obstacle>();
     }
+
+    m_wave = 0;
+    mp_waveEnnemies = 10;
 }
 
 void GameManager::setWindow(Window* pWindow)
@@ -253,19 +267,41 @@ Player* GameManager::getPlayer()
 
 void GameManager::spawnEnemies()
 {
-    if (mp_allowEnemies && mp_enemyCount < 24)
+    if (mp_allowEnemies && m_enemyCount < 24 && mp_ennemiesSpawnedInWave < mp_waveEnnemies)
     {
         if (std::rand() % 100 == 0)
         {
             createObject<Enemy>();
-            addEnemies(1);
+            addEnemies();
         }
+    }
+    if (m_enemyCount == 0 && mp_ennemiesSpawnedInWave == mp_waveEnnemies)
+    {
+        mp_allowEnemies = false;
+        nextWave();
     }
 }
 
-void GameManager::addEnemies(int count)
+void GameManager::nextWave()
 {
-    mp_enemyCount += count;
+    m_wave++;
+    mp_ennemiesSpawnedInWave = 0;
+    mp_waveSpawnTimer = 0;
+}
+
+int GameManager::waveEnemyCount(int waveNumber)
+{
+    if (waveNumber <= 1)  return 10;
+    if (waveNumber >= 100) return 1000;
+
+    int num = (1000 - 14) * (waveNumber - 2);
+    return 14 + (num + 98 / 2) / 98;
+}
+
+void GameManager::addEnemies()
+{
+    m_enemyCount++;
+    mp_ennemiesSpawnedInWave++;
 }
 
 void GameManager::checkCollisions()

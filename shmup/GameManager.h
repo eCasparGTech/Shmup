@@ -7,6 +7,7 @@
 #include "Keyboard.h"
 #include "Player.h"
 #include "Score.h"
+#include "WaveNumber.h"
 
 class Score;
 class PV;
@@ -27,7 +28,9 @@ public:
     virtual ~GameManager() {}
 
     void spawnEnemies();
-    void addEnemies(int count);
+    void nextWave();
+    int waveEnemyCount(int waveNumber);
+    void addEnemies();
     void start();
     void restartGame();
     void setWindow(Window* pWindow);
@@ -81,6 +84,7 @@ public:
 
     Window* mp_window = nullptr;
     GameOver* m_gameOver = nullptr;
+    WaveNumber* m_waveNumber = nullptr;
     PV* m_pv = nullptr;
 	AMMO* mp_ammo = nullptr;
 
@@ -97,7 +101,9 @@ public:
     }
 
     int getScore() { return mp_scoreValue; }
-
+    
+    unsigned int m_enemyCount = 0;
+    int m_wave = 0;
 private:
     Keyboard mp_keyboard;
     Timer mp_timer;
@@ -116,6 +122,9 @@ private:
     std::vector<Sprite*> mp_spriteList;
     std::vector<Sprite*> mp_pendingSpriteList;
     std::vector<Sprite*> mp_spriteToDestroy;
-    unsigned int mp_enemyCount = 0;
     bool mp_allowEnemies = false;
+    
+    int mp_waveEnnemies = 0;
+    int mp_ennemiesSpawnedInWave = 0;
+    int mp_waveSpawnTimer = 0;
 };
