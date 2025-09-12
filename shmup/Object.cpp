@@ -3,6 +3,7 @@
 #include "GameManager.h"
 
 Object::Object() {}
+
 Object::~Object()
 {
     mp_gameManager->destroySprite(mp_sprite);
@@ -138,7 +139,9 @@ bool Object::wouldCollideAt(const sf::Vector2f& aPosition, const sf::Vector2f& a
     for (Object* bObject : mp_gameManager->getObjects())
     {
         if (bObject == this) continue;
-        if (bObject->getType() == TProjectile || mp_objectType == TProjectile || mp_objectType == TCollectible) continue;
+        if (bObject->getType() == TProjectile || mp_objectType == TProjectile ||
+            bObject->getType() == TCollectible || mp_objectType == TCollectible)
+            continue;
 
         const sf::Vector2f bPosition = bObject->getPosition();
         const sf::Vector2f bSize = bObject->getSize();

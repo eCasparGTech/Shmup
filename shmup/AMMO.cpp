@@ -8,6 +8,7 @@ AMMO::AMMO() : UI() {}
 void AMMO::start()
 {
     UI::start();
+    uiPosition.y = mp_gameManager->getWindow()->getDimensions().y - 10;
 }
 
 void AMMO::setAmmo(int ammo)
