@@ -70,7 +70,7 @@ void Alive::die()
 {
     if (this->getType() == TEnemy)
     {
-        mp_gameManager->addEnemies(-1);
+        mp_gameManager->m_enemyCount--;
         mp_gameManager->addScore(100);
     }
     mp_gameManager->destroyObject(this);

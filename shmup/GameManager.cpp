@@ -29,12 +29,14 @@ void GameManager::start()
     {
         createObject<Obstacle>();
     }
-
+    
     unsigned int playerSpawnDelay = 1;
     unsigned int playerSpawnTimer = 0;
 
-    mp_allowEnemies = true;
-
+    unsigned int waveSpawnDelay = 3000;
+    mp_waveSpawnTimer = 0;
+    mp_waveEnnemies = 10;
+    
     while (mp_window->isOpen())
     {
         if (playerSpawnTimer == playerSpawnDelay)
@@ -46,14 +48,20 @@ void GameManager::start()
             mp_score = createUI<Score>();
         }
 
+        if (mp_waveSpawnTimer == waveSpawnDelay)
+        {
+            mp_allowEnemies = true;
+        }
+
         // restart game
         if (mp_player == nullptr && mp_keyboard.keyRelease(KeyCode::enter))
         {
             restartGame();
             playerSpawnTimer = 0;
+            mp_waveSpawnTimer = 0;
             mp_allowEnemies = true;
         }
-
+        
         // creating objects
         for (Object* pObject : mp_pendingObjectList)
         {
@@ -131,6 +139,7 @@ void GameManager::start()
         mp_window->display();
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
+        if (mp_waveSpawnTimer <= waveSpawnDelay) mp_waveSpawnTimer++;
     }
 }
 
@@ -145,7 +154,7 @@ void GameManager::restartGame()
     for (UI* pUI : mp_uiList) delete pUI;
     mp_uiList.clear();
     mp_uiToDestroy.clear();
-    
+
     for (Sprite* sprite : mp_spriteList) delete sprite;
     mp_spriteList.clear();
     mp_spriteToDestroy.clear();
@@ -153,11 +162,12 @@ void GameManager::restartGame()
     mp_pendingObjectList.clear();
     mp_pendingUIList.clear();
     mp_pendingSpriteList.clear();
-    
+
     m_prevCollisions.clear();
     mp_player = nullptr;
-    mp_enemyCount = 0;
-    
+    m_enemyCount = 0;
+    mp_scoreValue = 0;
+
     const auto dims = mp_window->getDimensions();
     unsigned int maxObstacleCount =
         static_cast<unsigned int>(dims.x * dims.y * 0.00005f);
@@ -167,6 +177,9 @@ void GameManager::restartGame()
     {
         createObject<Obstacle>();
     }
+
+    m_wave = 0;
+    mp_waveEnnemies = 10;
 }
 
 void GameManager::setWindow(Window* pWindow)
@@ -202,7 +215,7 @@ void GameManager::destroySprite(Sprite* sprite)
     if (std::find(mp_spriteList.begin(), mp_spriteList.end(), sprite) == mp_spriteList.end() ||
         std::find(mp_spriteToDestroy.begin(), mp_spriteToDestroy.end(), sprite) != mp_spriteToDestroy.end())
         return;
-
+    
     mp_spriteToDestroy.push_back(sprite);
 }
 
@@ -257,19 +270,41 @@ Player* GameManager::getPlayer()
 
 void GameManager::spawnEnemies()
 {
-    if (mp_allowEnemies && mp_enemyCount < 24)
+    if (mp_allowEnemies && m_enemyCount < 24 && mp_ennemiesSpawnedInWave < mp_waveEnnemies)
     {
         if (std::rand() % 100 == 0)
         {
             createObject<Enemy>();
-            addEnemies(1);
+            addEnemies();
         }
+    }
+    if (m_enemyCount == 0 && mp_ennemiesSpawnedInWave == mp_waveEnnemies)
+    {
+        mp_allowEnemies = false;
+        nextWave();
     }
 }
 
-void GameManager::addEnemies(int count)
+void GameManager::nextWave()
 {
-    mp_enemyCount += count;
+    m_wave++;
+    mp_ennemiesSpawnedInWave = 0;
+    mp_waveSpawnTimer = 0;
+}
+
+int GameManager::waveEnemyCount(int waveNumber)
+{
+    if (waveNumber <= 1)  return 10;
+    if (waveNumber >= 100) return 1000;
+
+    int num = (1000 - 14) * (waveNumber - 2);
+    return 14 + (num + 98 / 2) / 98;
+}
+
+void GameManager::addEnemies()
+{
+    m_enemyCount++;
+    mp_ennemiesSpawnedInWave++;
 }
 
 void GameManager::checkCollisions()

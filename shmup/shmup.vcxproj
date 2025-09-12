@@ -159,6 +159,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="WaveNumber.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="WaveNumber.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

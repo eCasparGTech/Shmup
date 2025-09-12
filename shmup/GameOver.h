@@ -1,7 +1,7 @@
 #pragma once
 #include "UI.h"
 
-class GameOver: public UI
+class GameOver : public UI
 {
 public:
     GameOver();
