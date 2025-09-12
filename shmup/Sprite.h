@@ -1,5 +1,8 @@
 ﻿#pragma once
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 #include "framework.h"
 
 class GameManager;
@@ -13,6 +16,7 @@ public:
     void setWidth(float width);
     void setHeight(float height);
     void setSize(sf::Vector2f shape);
+    void setText(const std::string& text);
     sf::Vector2f getSize() const { return m_drawable.getSize(); }
     void setRotation(float angle);
 
@@ -23,6 +27,8 @@ public:
     void setColor(sf::Color color);
 
     sf::RectangleShape m_drawable;
+    sf::Text m_text;
+    sf::Font m_font;
 
 private:
     void updateOrigin();

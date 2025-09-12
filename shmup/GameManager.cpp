@@ -1,15 +1,19 @@
 ﻿#include "GameManager.h"
 
 #include "Enemy.h"
+#include "GameOver.h"
 #include "Keyboard.h"
 #include "Object.h"
 #include "ObjectType.h"
 #include "Obstacle.h"
 #include "Player.h"
+#include "PV.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Window.h"
+#include "Score.h"
 
+class Score;
 GameManager* GameManager::instance = nullptr;
 
 GameManager::GameManager() {}
@@ -34,7 +38,11 @@ void GameManager::start()
     {
         if (playerSpawnTimer == playerSpawnDelay)
         {
+            m_pv = createUI<PV>();
+            mp_ammo = createUI<AMMO>();
+            m_gameOver = createUI<GameOver>();
             mp_player = createObject<Player>();
+            mp_score = createUI<Score>();
         }
 
         // restart game

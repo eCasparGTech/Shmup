@@ -1,11 +1,14 @@
 ﻿#include "Sprite.h"
 
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "GameManager.h"
 
-Sprite::Sprite()
+Sprite::Sprite() :
+    m_font("retro_font.ttf"),
+    m_text(m_font, "")
 {
     m_drawable = sf::RectangleShape();
     updateOrigin();
@@ -43,6 +46,17 @@ void Sprite::setSize(sf::Vector2f shape)
 {
     m_drawable.setSize(shape);
 }
+
+void Sprite::setText(const std::string& text)
+{
+    m_text.setCharacterSize(30);
+    m_text.setStyle(sf::Text::Bold);
+    m_text.setString(text);
+    m_text.setOrigin({m_text.getGlobalBounds().size.x * 0.5f, m_text.getGlobalBounds().size.y * 0.5f});
+    m_text.setPosition(m_drawable.getPosition());
+    m_text.setFillColor({ 255, 255, 255, 255});
+}
+
 
 void Sprite::setRotation(float angle)
 {

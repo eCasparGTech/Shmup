@@ -6,8 +6,11 @@
 
 #include "Keyboard.h"
 #include "Player.h"
+#include "Score.h"
 
+class Score;
 class PV;
+class GameOver;
 class UI;
 class Window;
 class Keyboard;
@@ -34,7 +37,6 @@ public:
     Keyboard* getKeyboard();
     Timer* getTimer();
     Player* getPlayer();
-    PV* getPV();
     void checkCollisions();
     void destroyObject(Object* object);
     void destroyUI(UI* ui);
@@ -49,7 +51,7 @@ public:
         sprite->start();
         return sprite;
     }
-    
+
     template <class T>
     T* createObject()
     {
@@ -70,8 +72,6 @@ public:
         return ui;
     }
 
-    
-
     static GameManager* getInstance()
     {
         if (instance == nullptr)
@@ -80,10 +80,30 @@ public:
     }
 
     Window* mp_window = nullptr;
+    GameOver* m_gameOver = nullptr;
+    PV* m_pv = nullptr;
+	AMMO* mp_ammo = nullptr;
+
+    void setScore(int score)
+    {
+        mp_scoreValue = score;
+        mp_score->updateScore();
+    }
+
+    void addScore(int score)
+    {
+        mp_scoreValue += score;
+        mp_score->updateScore();
+    }
+
+    int getScore() { return mp_scoreValue; }
+
 private:
     Keyboard mp_keyboard;
     Timer mp_timer;
     Player* mp_player = nullptr;
+    Score* mp_score = 0;
+    int mp_scoreValue = 0;
     std::vector<Object*> mp_objectList;
     std::vector<Object*> mp_pendingObjectList;
     std::vector<Object*> mp_objectToDestroy;

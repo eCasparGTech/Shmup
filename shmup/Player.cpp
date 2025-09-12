@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "GameManager.h"
+#include "GameOver.h"
 #include "Keyboard.h"
 #include "Projectile.h"
 #include "PV.h"
@@ -34,10 +35,8 @@ void Player::start()
     keyboard = mp_gameManager->getKeyboard();
     m_aimDirection = {0.0f, -1.0f};
     m_aimAngle = 0.0f;
-
-    mp_pv = mp_gameManager->createUI<PV>();
+    
     heal(3);
-    mp_ammo = mp_gameManager->createUI<AMMO>();
     giveAmmo(200);
 }
 
@@ -73,7 +72,7 @@ void Player::handleInput()
             if (attackSuccess)
             {
                 mp_ammoCount--;
-                mp_ammo->setAmmo(mp_ammoCount);
+                mp_gameManager->mp_ammo->setAmmo(mp_ammoCount);
             }
         }
     }
@@ -84,7 +83,7 @@ void Player::handleInput()
 void Player::heal(int amount)
 {
     Alive::heal(amount);
-    mp_pv->setLife(mp_life);
+    mp_gameManager->m_pv->setLife(mp_life);
 }
 
 void Player::giveAmmo(int amount)
@@ -92,16 +91,19 @@ void Player::giveAmmo(int amount)
     unsigned int ammoCount = mp_ammoCount + amount;
     if (ammoCount > 800) ammoCount = 800;
     mp_ammoCount = ammoCount;
-    mp_ammo->setAmmo(ammoCount);
+    mp_gameManager->mp_ammo->setAmmo(ammoCount);
 }
 
 void Player::takeDamage(int damage)
 {
     Alive::takeDamage(damage);
+    mp_gameManager->m_pv->setLife(mp_life);
+}
 
-    //std::cout << "Take damage" << std::endl;
-
-    mp_pv->setLife(mp_life);
+void Player::die()
+{
+    Alive::die();
+    mp_gameManager->m_gameOver->displayGameOver();
 }
 
 void Player::update()

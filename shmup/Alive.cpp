@@ -52,6 +52,7 @@ bool Alive::tryAttack(AttackType attackType)
 
 void Alive::takeDamage(int damage)
 {
+    if (mp_life <= 0) return;
     mp_life -= damage;
 
     mp_sprite->setColor({255, 0, 0, 255});
@@ -70,6 +71,7 @@ void Alive::die()
     if (this->getType() == TEnemy)
     {
         mp_gameManager->addEnemies(-1);
+        mp_gameManager->addScore(100);
     }
     mp_gameManager->destroyObject(this);
 }
