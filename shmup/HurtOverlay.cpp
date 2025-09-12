@@ -18,7 +18,8 @@ void HurtOverlay::start()
 
 void HurtOverlay::showHurtOverlay()
 {
-    mp_hurtOverlay->setPosition({ 0.0f, 0.0f });
+    mp_hurtOverlay->setPosition({ static_cast<float>(mp_gameManager->getWindow()->getDimensions().x) * 0.5f,
+        static_cast<float>(mp_gameManager->getWindow()->getDimensions().y) * 0.5f });
 }
 
 void HurtOverlay::hideHurtOverlay()
