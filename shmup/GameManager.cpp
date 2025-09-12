@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Keyboard.h"
 #include "Object.h"
+#include "ObjectType.h"
 #include "Obstacle.h"
 #include "Player.h"
 #include "Timer.h"
@@ -27,11 +28,21 @@ void GameManager::start()
     unsigned int playerSpawnDelay = 1;
     unsigned int playerSpawnTimer = 0;
 
+    mp_allowEnemies = true;
+    
     while (mp_window->isOpen())
     {
         if (playerSpawnTimer == playerSpawnDelay)
         {
             mp_player = createObject<Player>();
+        }
+
+        // restart game
+        if (mp_player == nullptr && mp_keyboard.keyRelease(KeyCode::enter))
+        {
+            restartGame();
+            playerSpawnTimer = 0;
+            mp_allowEnemies = true;
         }
         
         // creating objects
@@ -59,6 +70,10 @@ void GameManager::start()
         for (Object* pObject : mp_objectToDestroy)
         {
             mp_objectList.erase(std::remove(mp_objectList.begin(), mp_objectList.end(), pObject), mp_objectList.end());
+            if (pObject->getType() == TPlayer)
+            {
+                mp_player = nullptr;
+            }
             delete pObject;
         }
         mp_objectToDestroy.clear();
@@ -87,6 +102,9 @@ void GameManager::start()
         mp_window->pollEvents();
         mp_window->setTitle("FPS: " + std::to_string(mp_timer.getFps()));
 
+        // keyboard update
+        mp_keyboard.update();
+
         // update objects
         updateObjects();
 
@@ -104,6 +122,41 @@ void GameManager::start()
         mp_window->display();
 
         if (playerSpawnTimer <= playerSpawnDelay) playerSpawnTimer++;
+    }
+}
+
+void GameManager::restartGame()
+{
+    mp_allowEnemies = false;
+
+    for (Object* pObject : mp_objectList) delete pObject;
+    mp_objectList.clear();
+    mp_objectToDestroy.clear();
+
+    for (UI* pUI : mp_uiList) delete pUI;
+    mp_uiList.clear();
+    mp_uiToDestroy.clear();
+
+    for (Sprite* sprite : mp_spriteList) delete sprite;
+    mp_spriteList.clear();
+    mp_spriteToDestroy.clear();
+
+    mp_pendingObjectList.clear();
+    mp_pendingUIList.clear();
+    mp_pendingSpriteList.clear();
+
+    m_prevCollisions.clear();
+    mp_player = nullptr;
+    mp_enemyCount = 0;
+
+    const auto dims = mp_window->getDimensions();
+    unsigned int maxObstacleCount =
+        static_cast<unsigned int>(dims.x * dims.y * 0.00005f);
+    if (maxObstacleCount == 0) maxObstacleCount = 1;
+    unsigned int obstacleCount = std::rand() % maxObstacleCount;
+    for (unsigned int i = 0; i < obstacleCount; ++i)
+    {
+        createObject<Obstacle>();
     }
 }
 
@@ -157,17 +210,6 @@ void GameManager::render()
     {
         mp_window->draw(*sprite);
     }
-
-    /*for (Object* pObject : mp_objectList)
-    {
-        mp_window->draw(*pObject->mp_sprite);
-    }
-
-    for (UI* pUI : mp_uiList)
-    {
-        std::cout << "Rendering UI\n";
-        mp_window->draw(*pUI->m_sprite);
-    }*/
 }
 
 void GameManager::updateObjects()
@@ -203,7 +245,7 @@ Player* GameManager::getPlayer()
 
 void GameManager::spawnEnemies()
 {
-    if (mp_enemyCount < 24)
+    if (mp_allowEnemies && mp_enemyCount < 24)
     {
         if (std::rand() % 100 == 0)
         {

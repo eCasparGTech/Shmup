@@ -43,8 +43,6 @@ void Player::start()
 
 void Player::handleInput()
 {
-    keyboard->update();
-
     sf::Vector2f distance = {0.0f, 0.0f};
 
     if (keyboard->keyDown(KeyCode::up))

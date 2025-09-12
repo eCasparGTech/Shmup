@@ -26,6 +26,7 @@ public:
     void spawnEnemies();
     void addEnemies(int count);
     void start();
+    void restartGame();
     void setWindow(Window* pWindow);
     void render();
     void updateObjects();
@@ -96,4 +97,5 @@ private:
     std::vector<Sprite*> mp_pendingSpriteList;
     std::vector<Sprite*> mp_spriteToDestroy;
     unsigned int mp_enemyCount = 0;
+    bool mp_allowEnemies = false;
 };
