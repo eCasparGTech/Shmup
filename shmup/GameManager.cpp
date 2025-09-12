@@ -179,9 +179,12 @@ void GameManager::destroyObject(Object* object)
     if (std::find(mp_objectList.begin(), mp_objectList.end(), object) == mp_objectList.end() ||
         std::find(mp_objectToDestroy.begin(), mp_objectToDestroy.end(), object) != mp_objectToDestroy.end())
         return;
-    if (object->isCollidingWith(mp_player))
+    if (mp_player)
     {
-        mp_player->onCollisionExit(object);
+        if (object->isCollidingWith(mp_player))
+        {
+            mp_player->onCollisionExit(object);
+        }
     }
     mp_objectToDestroy.push_back(object);
 }
